@@ -76,6 +76,7 @@ const BunkerManager = () => {
                         Load Bunker
                     </button>
                 </Link>
+                {loadFile ? <LoadFile/> : null}
                 <Link to="/create">
                     <button onClick = {() => {setCreate(true)}} className = "bunkerEditorCreateButton">
                         Create Bunker
@@ -98,7 +99,6 @@ const BunkerManager = () => {
                     {back ? <App/> : null}
                 </Link>
                 <Routes>
-                    <Route path="load" element={LoadFile={LoadFile}}/>
                     <Route path="/create" render={() => {setCreate(false)}}/>
                     <Route path="/edit" render={() => {setEdit(false)}}/>
                     <Route path="/list" render={() => {setBunkerList(false)}}/>
