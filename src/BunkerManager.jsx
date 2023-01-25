@@ -69,43 +69,32 @@ const BunkerManager = () => {
 
 
     return (
-        <BrowserRouter>
-            <div>
-                <Link to="/load">
-                    <button onClick = {() => {setLoad(true)}} className = "bunkerEditorLoadButton">
-                        Load Bunker
-                    </button>
-                </Link>
-                {loadFile ? <LoadFile/> : null}
-                <Link to="/create">
-                    <button onClick = {() => {setCreate(true)}} className = "bunkerEditorCreateButton">
-                        Create Bunker
-                    </button>
-                </Link>
-                <Link to="/edit">
-                    <button onClick = {() => {setEdit(true)}} className = "bunkerEditorEditButton">
-                        Edit Bunker
-                    </button>
-                </Link>
-                <Link to="/list">
-                    <button onClick = {() => {setBunkerList(true)}} className = "bunkerEditorListButton">
-                        Bunker List
-                    </button>
-                </Link>
-                <Link to="/back">
-                    <button onClick = {() => {setBack(true)}} className = "bunkerEditorBackButton">
-                        Back
-                    </button>
-                    {back ? <App/> : null}
-                </Link>
-                <Routes>
-                    <Route path="/create" render={() => {setCreate(false)}}/>
-                    <Route path="/edit" render={() => {setEdit(false)}}/>
-                    <Route path="/list" render={() => {setBunkerList(false)}}/>
-                    <Route path="back" element = {<App />}/>
-                </Routes>
-            </div>
-        </BrowserRouter>
+        <div>
+            <button onClick = {() => {setLoad(true)}} className = "bunkerEditorLoadButton">
+                Load Bunker
+            </button>
+            {loadFile ? <LoadFile/> : null}
+            <Link to="/manage/create">
+                <button onClick = {() => {setCreate(true)}} className = "bunkerEditorCreateButton">
+                    Create Bunker
+                </button>
+            </Link>
+            <Link to="/edit">
+                <button onClick = {() => {setEdit(true)}} className = "bunkerEditorEditButton">
+                    Edit Bunker
+                </button>
+            </Link>
+            <Link to="/list">
+                <button onClick = {() => {setBunkerList(true)}} className = "bunkerEditorListButton">
+                    Bunker List
+                </button>
+            </Link>
+            <Link to="/">
+                <button className = "bunkerEditorBackButton">
+                    Back
+                </button>
+            </Link>
+        </div>
     );
 
 }

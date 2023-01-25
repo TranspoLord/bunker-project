@@ -2,51 +2,20 @@ import React, {useState} from 'react';
 import './App.css';
 import GameManager from "./GameManager"
 import BunkerManager from "./BunkerManager"
+import Home from "./Home"
+import PageNotFound from './PageNotFound';
+import { Routes, Route } from "react-router";
+import CreateBunker from './CreateBunker';
 
 function App() {
-  const [debug, setDebug] = useState(false)
-  const [startGame, setStartGame] = useState(false)
-  const [bunkerManager, setBunkerManager] = useState(false)
-
-  function buttonDesicsion() {
-    if(startGame){
-      return <GameManager />
-    }
-    else if(bunkerManager){
-      return <BunkerManager />
-    }
-    else{
-      return (
-        <div>
-            <button onClick={
-              () => {setStartGame(!startGame)}
-            } className = "startButton">
-              Start Game
-            </button>
-            <p>Start Game: {startGame ? "True" : "False"}</p>
-
-            <button onClick = {
-              () => {setBunkerManager(!bunkerManager)}
-            } className = "bunkerMButton">
-              Manage Bunkers
-              </button>
-            <p>Bunker Manager: {bunkerManager ? "True" : "False"}</p>
-
-            <button onClick={
-              () => {setDebug(!debug)}
-            } className="debugButton">
-              Set Debug Outputs
-            </button>
-            <p>Debug state: {debug ? "True" : "False"}</p>
-          </div>
-      )
-    }
-  }
-
   return (
-    <div className="App">
-      {buttonDesicsion()}
-    </div>
+    <Routes>
+      <Route path={"/"} element={<Home />} />
+      <Route path={"/game"} element={<GameManager />} />
+      <Route path={"/manage"} element={<BunkerManager />} />
+      <Route path={"/manage/create"} element={<CreateBunker />} />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   )
 }
 
