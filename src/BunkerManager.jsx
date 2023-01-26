@@ -79,7 +79,7 @@ const BunkerManager = () => {
                     Create Bunker
                 </button>
             </Link>
-            <Link to="/edit">
+            <Link to="/manage/edit">
                 <button onClick = {() => {setEdit(true)}} className = "bunkerEditorEditButton">
                     Edit Bunker
                 </button>
