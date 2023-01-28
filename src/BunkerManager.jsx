@@ -37,6 +37,7 @@ const BunkerManager = () => {
                     }
                 };
                 reader.readAsText(file);
+                console.log(JSON.stringify(file))
             } else {
                 setIsValid(false);
             }
@@ -52,21 +53,6 @@ const BunkerManager = () => {
             </div>
         );
     }
-
-    function CreateBunker() {
-        //TODO: Finish this function
-        const bunkerName = prompt("Enter the name of the bunker you want to create")
-        const bunkerRoom1 = prompt("Enter the name of the first room in the bunker")
-        const bunkerRoom1Description = prompt("Enter the description of the first room in the bunker")
-        const bunkerRoom2 = prompt("Enter the name of the second room in the bunker")
-        const bunkerRoom2Description = prompt("Enter the description of the second room in the bunker")
-        const bunkerRoom3 = prompt("Enter the name of the third room in the bunker")
-        const bunkerRoom3Description = prompt("Enter the description of the third room in the bunker")
-        const bunkerRoom4 = prompt("Enter the name of the fourth room in the bunker")
-        const bunkerRoom4Description = prompt("Enter the description of the fourth room in the bunker")
-
-    }
-
 
     return (
         <div>
