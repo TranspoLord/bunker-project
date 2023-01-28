@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import App from './App';
 import './App.css';
 import GameManager from './GameManager';
@@ -13,70 +13,63 @@ const BunkerManager = () => {
     const [bunkerList, setBunkerList] = useState(false)
     const [back, setBack] = useState(false)
     const [file, setFile] = useState(null);
+    const [isValid, setIsValid] = useState(null);
 
-    function LoadFile() {
-        console.log("This is the load file function")
-        const [isValid, setIsValid] = useState(null);
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
+        validateFile(selectedFile);
+    };
 
-        const handleFileChange = (event) => {
-            const selectedFile = event.target.files[0];
-            setFile(selectedFile);
-            validateFile(selectedFile);            
-        };
-
-        const validateFile = (file) => {
-            if(file.type === "application/json" || file.type === "text/plain") {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    try{
-                        const fileData = JSON.parse(event.target.result);
-                        console.log(fileData);
-                        setIsValid(true);
-                    } catch (error) {
-                        setIsValid(false);
-                    }
-                };
-                reader.readAsText(file);
-                console.log(JSON.stringify(file))
-            } else {
+    const validateFile = (file) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const fileData = JSON.parse(event.target.result);
+                console.log(fileData);
+                setIsValid(true);
+            } catch (error) {
                 setIsValid(false);
             }
         };
+        reader.readAsText(file);
+        console.log(JSON.stringify(file))
+    };
 
-        return (   
-            <div>
-                {console.log("This is the load file function return")}
-                <input type="file" onChange={handleFileChange} />
-                {file ? 'Selected file: ${file.name}' : "No file selected"}
-                {isValid === true ? <p>The file is a valid json file</p> : null}
-                {isValid === false ? <p>The file is not a valid json file</p> : null}
-            </div>
-        );
+    function loadFromLocalStorage(){
+
     }
 
+    //TODO: Automatically move to edit page after file load to have user confirm text is correct
+    //TODO: Create a list/cards of all saved bunkers in local storage
+    //TODO: On cards, have a button to delete the bunker from local storage
+    //TODO: On cards, have a button to edit the bunker in the editor
     return (
         <div>
-            <button onClick = {() => {setLoad(true)}} className = "bunkerEditorLoadButton">
-                Load Bunker
-            </button>
-            {loadFile ? <LoadFile/> : null}
+            <h1>Bunker Manager</h1>
+            <label htmlFor='fileInput'>
+                <button onClick={() => { document.getElementById("fileInput").click() }} className="bunkerEditorLoadButton">
+                    Load Bunker
+                </button>
+            </label>
+            <input id='fileInput' type='file' accept="application/json, text/plain" style={{ display: 'none' }} onChange={handleFileChange} />
             <Link to="/manage/create">
-                <button onClick = {() => {setCreate(true)}} className = "bunkerEditorCreateButton">
+                <button onClick={() => { setCreate(true) }} className="bunkerEditorCreateButton">
                     Create Bunker
                 </button>
             </Link>
             <Link to="/manage/edit">
-                <button onClick = {() => {setEdit(true)}} className = "bunkerEditorEditButton">
+                <button onClick={() => { setEdit(true) }} className="bunkerEditorEditButton">
                     Edit Bunker
                 </button>
             </Link>
             <Link to="/list">
-                <button onClick = {() => {setBunkerList(true)}} className = "bunkerEditorListButton">
+                <button onClick={() => { setBunkerList(true) }} className="bunkerEditorListButton">
                     Bunker List
                 </button>
             </Link>
             <Link to="/">
-                <button className = "bunkerEditorBackButton">
+                <button className="bunkerEditorBackButton">
                     Back
                 </button>
             </Link>
