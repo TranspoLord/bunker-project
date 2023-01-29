@@ -49,25 +49,11 @@ function CreateBunker(props){
         setBunkerSaved(true)
     }
 
-    function loadBunker() {
-        console.log('selectedbunker', selectedBunker, typeof selectedBunker)
-        const bunkerString = localStorage.getItem(selectedBunker)   
-        console.log(bunkerString)
-        const bunker = JSON.parse(bunkerString);
-        console.log(bunker)
-        if (bunker) setRooms(bunker)
-    }
-
-    const allSavedBunkers = Object.keys(localStorage)
-
     return (
         <div>
             <h1>{bunkerBool ? 'Creating' : bunkerSaved ? 'Editing - Saved' : 'Editing'}</h1>
-            <select onChange={e => setSelectedBunker(e.target.value)}>
-                {allSavedBunkers.map((bunker, index) => <option key={index} value={bunker.name}>{bunker}</option>)}
-            </select>
-            <button className="bunkerSave" onClick={loadBunker}>Load</button>
-            <Link to="/manage">Back</Link>
+            <Link to="/manage">
+                <button>Back</button></Link>
             <button className = "bunkerSave" onClick={() => handleBunkerSave()}>Save</button>
             <input
                 type="text"

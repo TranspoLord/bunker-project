@@ -10,7 +10,7 @@ const BunkerManager = () => {
     const [loadFile, setLoad] = useState(false)
     const [createBunker, setCreate] = useState(false)
     const [editBunker, setEdit] = useState(false)
-    const [bunkerList, setBunkerList] = useState(false)
+    const [bunkerList, setBunkerList] = useState(Object.keys(localStorage))
     const [back, setBack] = useState(false)
     const [file, setFile] = useState(null);
     const [isValid, setIsValid] = useState(null);
@@ -36,8 +36,11 @@ const BunkerManager = () => {
         console.log(JSON.stringify(file))
     };
 
-    function loadFromLocalStorage(){
-
+    function handleRemoveBunker(index){
+        const newBunkers = [...bunkerList]
+        newBunkers.splice(index, 1)
+        setBunkerList(newBunkers)
+        localStorage.removeItem(bunkerList[index])
     }
 
     //TODO: Automatically move to edit page after file load to have user confirm text is correct
@@ -63,16 +66,22 @@ const BunkerManager = () => {
                     Edit Bunker
                 </button>
             </Link>
-            <Link to="/list">
-                <button onClick={() => { setBunkerList(true) }} className="bunkerEditorListButton">
-                    Bunker List
-                </button>
-            </Link>
             <Link to="/">
                 <button className="bunkerEditorBackButton">
                     Back
                 </button>
             </Link>
+            {bunkerList.map((bunker, index) => (
+                <div key={index} className = "bunkerCards">
+                    <h3>{bunker}</h3>
+                    <h5>Room Count: </h5>
+                    <h5>Description: </h5>
+                    <Link to="/manage/edit">
+                        <button onClick={() => {setEdit(true)}}>Edit</button>
+                    </Link>
+                    <button onClick={() => {handleRemoveBunker(index)}}>Delete</button>
+                </div>
+            ))}
         </div>
     );
 
