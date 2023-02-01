@@ -5,6 +5,9 @@ import GameManager from './GameManager';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { Routes } from 'react-router';
 import { createNull } from 'typescript';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import { CardContent, CardActions, Typography } from '@mui/material';
 
 const BunkerManager = () => {
     const [loadFile, setLoad] = useState(false)
@@ -41,45 +44,53 @@ const BunkerManager = () => {
         newBunkers.splice(index, 1)
         setBunkerList(newBunkers)
         localStorage.removeItem(bunkerList[index])
+        console.log(JSON.stringify(localStorage))
     }
 
-    //TODO: Automatically move to edit page after file load to have user confirm text is correct
-    //TODO: Create a list/cards of all saved bunkers in local storage
-    //TODO: On cards, have a button to delete the bunker from local storage
-    //TODO: On cards, have a button to edit the bunker in the editor
+    function BunkerCard (bunker, index) {
+        return (
+            <Card sx={{ minWidth: 275 }}>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {bunker}
+                    </Typography>
+                    <Typography variant="body2">
+                        Room Count: NYI
+                        Description: NYI
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Link to="/manage/edit">
+                        <Button size="small" variant="outlined" onClick={() => {setEdit(true)}}>Edit</Button>
+                    </Link>
+                    <Button size="small" variant="outlined" onClick={() => {handleRemoveBunker(index)}}>Delete</Button>
+                </CardActions>
+            </Card>
+        );
+    }
+
     return (
         <div>
             <h1>Bunker Manager</h1>
             <label htmlFor='fileInput'>
-                <button onClick={() => { document.getElementById("fileInput").click() }} className="bunkerEditorLoadButton">
+                <Button variant='contained' onClick={() => { document.getElementById("fileInput").click() }} >
                     Load Bunker
-                </button>
+                </Button>
             </label>
             <input id='fileInput' type='file' accept="application/json, text/plain" style={{ display: 'none' }} onChange={handleFileChange} />
             <Link to="/manage/create">
-                <button onClick={() => { setCreate(true) }} className="bunkerEditorCreateButton">
+                <Button variant="contained" onClick={() => { setCreate(true) }}>
                     Create Bunker
-                </button>
-            </Link>
-            <Link to="/manage/edit">
-                <button onClick={() => { setEdit(true) }} className="bunkerEditorEditButton">
-                    Edit Bunker
-                </button>
+                </Button>
             </Link>
             <Link to="/">
-                <button className="bunkerEditorBackButton">
+                <Button variant='contained'>
                     Back
-                </button>
+                </Button>
             </Link>
             {bunkerList.map((bunker, index) => (
-                <div key={index} className = "bunkerCards">
-                    <h3>{bunker}</h3>
-                    <h5>Room Count: </h5>
-                    <h5>Description: </h5>
-                    <Link to="/manage/edit">
-                        <button onClick={() => {setEdit(true)}}>Edit</button>
-                    </Link>
-                    <button onClick={() => {handleRemoveBunker(index)}}>Delete</button>
+                <div key={index}>
+                    {BunkerCard(bunker, index)}
                 </div>
             ))}
         </div>

@@ -1,7 +1,8 @@
+import { TextField, Box, Card, Button, CardContent, Typography } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-function CreateBunker(props){
+function CreateBunker(props) {
     const [bunkerBool, setBunkerBool] = useState(props.isCreatingBunker);
     const [selectedBunker, setSelectedBunker] = useState(null);
     const [bunkerSaved, setBunkerSaved] = useState(false);
@@ -14,7 +15,10 @@ function CreateBunker(props){
     const [newWest, setNewWest] = useState("");
     const [newDescription, setNewDescription] = useState("");
 
-    function handleAddRoom (e) {
+
+    //TODO: Use snackbar to display messages(function with severity, message, and duration)
+
+    function handleAddRoom(e) {
         e.preventDefault();
         const newRoom = {
             name: newName,
@@ -34,7 +38,7 @@ function CreateBunker(props){
         setNewDescription("");
     }
 
-    function handleRemoveRoom (index) {
+    function handleRemoveRoom(index) {
         const newRooms = [...rooms];
         newRooms.splice(index, 1);
         setRooms(newRooms);
@@ -49,144 +53,54 @@ function CreateBunker(props){
         setBunkerSaved(true)
     }
 
+    const getBasicBunkerInfo = () => {
+        return (
+            <div>
+                <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
+                    <h2>Basic Bunker Info</h2>
+                    <h4>Rooms: {rooms.length}</h4>
+                    <TextField required margin="normal" id="outlined-basic" label="Bunker Name" variant="outlined" value={bunkerName} onChange={(e) => setNewBunkerName(e.target.value)} />
+                    <TextField margin="normal" id="outlined-basic" label="Bunker Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+                </Box>
+            </div>
+        );
+    }
+
+    function addRoomCard(){
+        return (
+            <div>
+                
+            </div>
+        );
+    }
+
+    const getRoomInfo = () => {
+        return (
+            <div>
+                <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '5ch' }, }} noValidate autoComplete="off">
+                    <TextField required size="small" margin="dense" id="outlined-basic" label="Room Name" variant="outlined" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="North" variant="outlined" value={newNorth} onChange={(e) => setNewNorth(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="South" variant="outlined" value={newSouth} onChange={(e) => setNewSouth(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="East" variant="outlined" value={newEast} onChange={(e) => setNewEast(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="West" variant="outlined" value={newWest} onChange={(e) => setNewWest(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+                    <button onClick={handleAddRoom}>Add Room</button>
+                </Box>
+            </div>
+        );
+    }
+
     return (
         <div>
-            <h1>{bunkerBool ? 'Creating' : bunkerSaved ? 'Editing - Saved' : 'Editing'}</h1>
-            <Link to="/manage">
-                <button>Back</button></Link>
-            <button className = "bunkerSave" onClick={() => handleBunkerSave()}>Save</button>
-            <input
-                type="text"
-                placeholder="Bunker Name"
-                value={bunkerName}
-                onChange={(e) => setNewBunkerName(e.target.value)}
-            />
-            <form onSubmit={handleAddRoom}>
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="North"
-                    value={newNorth}
-                    onChange={(e) => setNewNorth(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="South"
-                    value={newSouth}
-                    onChange={(e) => setNewSouth(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="East"
-                    value={newEast}
-                    onChange={(e) => setNewEast(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="West"
-                    value={newWest}
-                    onChange={(e) => setNewWest(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Description"
-                    value={newDescription}
-                    onChange={(e) => setNewDescription(e.target.value)}
-                />
-                <button type="submit">Add Room</button>
-            </form>
-            {rooms.map((room, index) => (
-                <div key={index} className = "roomCards">
-                    <h3>{room.name}</h3>
-                    <p>{room.north}</p>
-                    <p>{room.south}</p>
-                    <p>{room.east}</p>
-                    <p>{room.west}</p>
-                    <p>{room.description}</p>
-                    <button onClick={() => handleRemoveRoom(index)}>Delete</button>
-                </div>
-            ))}
+            <h1>Create Bunker</h1>
+            <Link to="/manage"><Button variant="contained">Back</Button></Link>
+            <Button variant="contained" onClick={handleBunkerSave}>Save Bunker</Button>
+            {getBasicBunkerInfo()}
+            <h2>Rooms</h2>
+            <Button variant="contained" onClick={addRoomCard()}>Add Room</Button>
         </div>
     );
 
 }
-
-
-// function RoomComponent(props) {
-//     const nameInput = useRef()
-//     const northInput = useRef()
-//     const southInput = useRef()
-//     const eastInput = useRef()
-//     const westInput = useRef()
-
-//     function saveRoom() {
-//         props.setBunker(prevBunker =>
-//         (
-//             {
-//                 ...prevBunker, [nameInput.current.value]: {
-//                     "Name": nameInput.current.value,
-//                     "North": northInput.current.value,
-//                     "South": southInput.current.value,
-//                     "East": eastInput.current.value,
-//                     "West": westInput.current.value,
-//                 }
-//             }
-//         )
-//         )
-//     }
-
-//     function removeRoom() {
-//         props.setBunker(prevBunker => {
-//             delete props[nameInput.current.value]             
-//         })
-//     }
-
-//     return (
-//         <div>
-//             <input ref={nameInput} />
-//             <input ref={northInput} />
-//             <input ref={southInput} />
-//             <input ref={eastInput} />
-//             <input ref={westInput} />
-//             <button onClick={() => { saveRoom() }}>Save</button>
-//             <button onClick={() => { removeRoom() }}>Clear</button>
-//         </div>
-//     )
-// }
-
-
-// function CreateBunker(props) {
-//     const [bunker, setBunker] = useState({})
-//     let bunkerName = ""
-//     if (!props.isCreatingBunker) {
-//         bunkerName = "Editing"
-//     } else {
-//         bunkerName = "Creating"
-//     }
-//     const rooms = Object.keys(bunker).map((key) => {
-//         // return RoomComponent
-//         return (
-//             <div>
-//                 <RoomComponent setBunker={setBunker} room={bunker[key]} />
-//             </div>
-//         )
-//     })
-
-//     return (
-//         <div>
-//             <h1>{bunkerName}</h1>
-//             <Link to="/">Home</Link>
-//             <RoomComponent setBunker={setBunker} />
-//             {rooms}
-//             {JSON.stringify(bunker)}
-//         </div>
-//     )
-
-// }
 
 export default CreateBunker;
