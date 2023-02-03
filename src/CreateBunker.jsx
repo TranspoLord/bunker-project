@@ -8,18 +8,18 @@ function CreateBunker(props) {
     const [bunkerSaved, setBunkerSaved] = useState(false);
     const [bunkerName, setNewBunkerName] = useState("");
     const [rooms, setRooms] = useState([]);
+    const [needEmptyRoom, setNeedEmptyRoom] = useState(true);
     const [newName, setNewName] = useState("");
     const [newNorth, setNewNorth] = useState("");
     const [newSouth, setNewSouth] = useState("");
     const [newEast, setNewEast] = useState("");
     const [newWest, setNewWest] = useState("");
     const [newDescription, setNewDescription] = useState("");
-
-
     //TODO: Use snackbar to display messages(function with severity, message, and duration)
 
     function handleAddRoom(e) {
         e.preventDefault();
+        if(newName === "" || newDescription === ""){return;}
         const newRoom = {
             name: newName,
             north: newNorth,
@@ -53,6 +53,10 @@ function CreateBunker(props) {
         setBunkerSaved(true)
     }
 
+    function snackBarMessage(message, severity, duration){
+        //todo: Create separate snackbar class so other components can use it
+    }
+
     const getBasicBunkerInfo = () => {
         return (
             <div>
@@ -66,30 +70,6 @@ function CreateBunker(props) {
         );
     }
 
-    function addRoomCard(){
-        return (
-            <div>
-                
-            </div>
-        );
-    }
-
-    const getRoomInfo = () => {
-        return (
-            <div>
-                <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '5ch' }, }} noValidate autoComplete="off">
-                    <TextField required size="small" margin="dense" id="outlined-basic" label="Room Name" variant="outlined" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="North" variant="outlined" value={newNorth} onChange={(e) => setNewNorth(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="South" variant="outlined" value={newSouth} onChange={(e) => setNewSouth(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="East" variant="outlined" value={newEast} onChange={(e) => setNewEast(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="West" variant="outlined" value={newWest} onChange={(e) => setNewWest(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
-                    <button onClick={handleAddRoom}>Add Room</button>
-                </Box>
-            </div>
-        );
-    }
-
     return (
         <div>
             <h1>Create Bunker</h1>
@@ -97,7 +77,43 @@ function CreateBunker(props) {
             <Button variant="contained" onClick={handleBunkerSave}>Save Bunker</Button>
             {getBasicBunkerInfo()}
             <h2>Rooms</h2>
-            <Button variant="contained" onClick={addRoomCard()}>Add Room</Button>
+            <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
+                    <TextField required size="small" margin="dense" id="outlined-basic" label="Room Name" variant="outlined" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="North" variant="outlined" value={newNorth} onChange={(e) => setNewNorth(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="South" variant="outlined" value={newSouth} onChange={(e) => setNewSouth(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="East" variant="outlined" value={newEast} onChange={(e) => setNewEast(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="West" variant="outlined" value={newWest} onChange={(e) => setNewWest(e.target.value)} />
+                    <TextField size="small" margin="dense" id="outlined-basic" label="Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+                    <Button variant="contained" onClick={handleAddRoom}>Add Room</Button>
+            </Box>
+            {rooms.map((room, index) => (
+                <Card sx={{ minWidth: 275 }} key={index}>
+                    <CardContent>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            Room {index + 1}
+                        </Typography>
+                        <Typography variant="h5" component="div">
+                            {room.name}
+                        </Typography>
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                            {room.description}
+                        </Typography>
+                        <Typography variant="body2">
+                            North: {room.north}
+                        </Typography>
+                        <Typography variant="body2">
+                            South: {room.south}
+                        </Typography>
+                        <Typography variant="body2">
+                            East: {room.east}
+                        </Typography>
+                        <Typography variant="body2">
+                            West: {room.west}
+                        </Typography>
+                        <Button variant="contained" onClick={() => handleRemoveRoom(index)}>Remove Room</Button>
+                    </CardContent>
+                </Card>
+            ))}
         </div>
     );
 
