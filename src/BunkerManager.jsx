@@ -8,6 +8,7 @@ import { createNull } from 'typescript';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import { CardContent, CardActions, Typography } from '@mui/material';
+import SnackBarMessage from './SnackBar';
 
 const BunkerManager = () => {
     const [loadFile, setLoad] = useState(false)
@@ -72,6 +73,9 @@ const BunkerManager = () => {
     return (
         <div>
             <h1>Bunker Manager</h1>
+            <Button variant='contained' onClick={() => SnackBarMessage("Success","This is a message")} >
+                Test SnackBar
+            </Button>
             <label htmlFor='fileInput'>
                 <Button variant='contained' onClick={() => { document.getElementById("fileInput").click() }} >
                     Load Bunker
@@ -88,6 +92,7 @@ const BunkerManager = () => {
                     Back
                 </Button>
             </Link>
+            
             {bunkerList.map((bunker, index) => (
                 <div key={index}>
                     {BunkerCard(bunker, index)}

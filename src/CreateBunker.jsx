@@ -1,32 +1,43 @@
-import { TextField, Box, Card, Button, CardContent, Typography } from '@mui/material';
+import { TextField, Box, Card, Button, CardContent, Typography, FormControl, DialogActions } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import SnackBar from './SnackBar';
+import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
+import { Input, InputLabel, MenuItem, Select } from '@mui/material';
 
 function CreateBunker(props) {
     const [bunkerBool, setBunkerBool] = useState(props.isCreatingBunker);
     const [selectedBunker, setSelectedBunker] = useState(null);
     const [bunkerSaved, setBunkerSaved] = useState(false);
     const [bunkerName, setNewBunkerName] = useState("");
+    const [bunkerDescription, setNewBunkerDescription] = useState("");
+
     const [rooms, setRooms] = useState([]);
-    const [needEmptyRoom, setNeedEmptyRoom] = useState(true);
     const [newName, setNewName] = useState("");
     const [newNorth, setNewNorth] = useState("");
     const [newSouth, setNewSouth] = useState("");
     const [newEast, setNewEast] = useState("");
     const [newWest, setNewWest] = useState("");
-    const [newDescription, setNewDescription] = useState("");
-    //TODO: Use snackbar to display messages(function with severity, message, and duration)
+    const [newRoomDescription, setNewRoomDescription] = useState("");
+    const [newRoomItem, setNewRoomItem] = useState("");
+
+    const [items, setItems] = useState([]);
+    const [openWindow, setOpenWindow] = useState(false);
+    const [itemName, setItemName] = useState("");
+    const [itemDescription, setItemDescription] = useState("");
+    const [itemRequired, setItemRequired] = useState("");
 
     function handleAddRoom(e) {
         e.preventDefault();
-        if(newName === "" || newDescription === ""){return;}
+        if (newName === "" || newRoomDescription === "") { return; }
         const newRoom = {
             name: newName,
             north: newNorth,
             south: newSouth,
             east: newEast,
             west: newWest,
-            description: newDescription
+            description: newRoomDescription,
+            item: newRoomItem
         };
 
         setRooms([...rooms, newRoom]);
@@ -35,7 +46,8 @@ function CreateBunker(props) {
         setNewSouth("");
         setNewEast("");
         setNewWest("");
-        setNewDescription("");
+        setNewRoomDescription("");
+        setNewRoomItem("");
     }
 
     function handleRemoveRoom(index) {
@@ -44,17 +56,38 @@ function CreateBunker(props) {
         setRooms(newRooms);
     }
 
+    function handleAddItem(e) {
+        e.preventDefault();
+        if (itemName === "" || itemDescription === "") { return; }
+        const newItem = {
+            name: itemName,
+            description: itemDescription,
+            required: itemRequired
+        };
+
+        setItems([...items, newItem]);
+        setItemName("");
+        setItemDescription("");
+        console.log("Item added" + newItem.name + " " + newItem.description + " " + newItem.required);
+        handleCloseItem();
+    }
+
+    const handleItemOpen = () => {
+        setOpenWindow(true);
+    };
+
+    const handleCloseItem = () => {
+        setOpenWindow(false);
+    };
+
     function handleBunkerSave() {
         //Save bunker to local storage here
         console.log("Saving bunker to local storage")
         console.log(rooms)
-        localStorage.setItem("bunker" + bunkerName, JSON.stringify(rooms))
+        localStorage.setItem("bunker-" + bunkerName, JSON.stringify(rooms))
+        localStorage.setItem("bunker-" + bunkerName + "-items", JSON.stringify(items))
         setBunkerBool(false)
         setBunkerSaved(true)
-    }
-
-    function snackBarMessage(message, severity, duration){
-        //todo: Create separate snackbar class so other components can use it
     }
 
     const getBasicBunkerInfo = () => {
@@ -64,10 +97,22 @@ function CreateBunker(props) {
                     <h2>Basic Bunker Info</h2>
                     <h4>Rooms: {rooms.length}</h4>
                     <TextField required margin="normal" id="outlined-basic" label="Bunker Name" variant="outlined" value={bunkerName} onChange={(e) => setNewBunkerName(e.target.value)} />
-                    <TextField margin="normal" id="outlined-basic" label="Bunker Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+                    <TextField margin="normal" id="outlined-basic" label="Bunker Description" variant="outlined" value={bunkerDescription} onChange={(e) => setNewBunkerDescription(e.target.value)} />
                 </Box>
             </div>
         );
+    }
+
+    const getItemsFromLocalStorage = () => {
+        const items = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith("bunker-" + bunkerName + "-items")) {
+                items.push(JSON.parse(localStorage.getItem(key)));
+            }
+        }
+        setItems(items);
+        return items;
     }
 
     return (
@@ -75,16 +120,79 @@ function CreateBunker(props) {
             <h1>Create Bunker</h1>
             <Link to="/manage"><Button variant="contained">Back</Button></Link>
             <Button variant="contained" onClick={handleBunkerSave}>Save Bunker</Button>
+            <Button variant="contained" onClick={handleItemOpen}>Create Item</Button>
+            <Dialog open={openWindow} onClose={handleCloseItem} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Create Item</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Create a new item for your bunker.
+                    </DialogContentText>
+                    <form>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Item Name"
+                            type="text"
+                            fullWidth
+                            value={itemName}
+                            onChange={(e) => setItemName(e.target.value)}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="description"
+                            label="Item Description"
+                            type="text"
+                            fullWidth
+                            value={itemDescription}
+                            onChange={(e) => setItemDescription(e.target.value)}
+                        />
+                        <FormControl fullWidth>
+                            <InputLabel id="select-label">Needed to Pickup</InputLabel>
+                            <Select
+                                labelId="select-label"
+                                id="select"
+                                value={itemRequired}
+                                label="Required Item"
+                                onChange={(e) => setItemRequired(e.target.value)}
+                            >
+                                <MenuItem value={"None"}>None</MenuItem>
+                                {Object.entries(items).map(([key, value]) => (
+                                    <MenuItem value={value.name}>{value.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <DialogActions>
+                            <Button onClick={handleCloseItem}>Cancel</Button>
+                            <Button onClick={handleAddItem} type="submit">Submit</Button>
+                        </DialogActions>
+                    </form>
+                </DialogContent>
+            </Dialog>
             {getBasicBunkerInfo()}
             <h2>Rooms</h2>
             <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                    <TextField required size="small" margin="dense" id="outlined-basic" label="Room Name" variant="outlined" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="North" variant="outlined" value={newNorth} onChange={(e) => setNewNorth(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="South" variant="outlined" value={newSouth} onChange={(e) => setNewSouth(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="East" variant="outlined" value={newEast} onChange={(e) => setNewEast(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="West" variant="outlined" value={newWest} onChange={(e) => setNewWest(e.target.value)} />
-                    <TextField size="small" margin="dense" id="outlined-basic" label="Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
-                    <Button variant="contained" onClick={handleAddRoom}>Add Room</Button>
+                <TextField required size="small" margin="dense" id="outlined-basic" label="Room Name" variant="outlined" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                <TextField size="small" margin="dense" id="outlined-basic" label="Description" variant="outlined" value={newRoomDescription} onChange={(e) => setNewRoomDescription(e.target.value)} />
+                <TextField size="small" margin="dense" id="outlined-basic" label="North Room" variant="outlined" value={newNorth} onChange={(e) => setNewNorth(e.target.value)} />
+                <TextField size="small" margin="dense" id="outlined-basic" label="South Room" variant="outlined" value={newSouth} onChange={(e) => setNewSouth(e.target.value)} />
+                <TextField size="small" margin="dense" id="outlined-basic" label="East Room" variant="outlined" value={newEast} onChange={(e) => setNewEast(e.target.value)} />
+                <TextField size="small" margin="dense" id="outlined-basic" label="West Room" variant="outlined" value={newWest} onChange={(e) => setNewWest(e.target.value)} />
+                <FormControl>
+                    <InputLabel id="RoomItemLabel">Item</InputLabel>
+                    <Select
+                        labelId="RoomItemLabel"
+                        id="select"
+                        value={itemRequired}
+                        label="Room Item"
+                        onChange={(e) => setItemRequired(e.target.value)}>
+                        {Object.entries(items).map(([key, value]) => (
+                            <MenuItem value={value.name}>{value.name}</MenuItem>
+                        ))}
+                        <MenuItem value={"None"}>None</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button variant="contained" onClick={handleAddRoom}>Add Room</Button>
             </Box>
             {rooms.map((room, index) => (
                 <Card sx={{ minWidth: 275 }} key={index}>
@@ -96,7 +204,7 @@ function CreateBunker(props) {
                             {room.name}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            {room.description}
+                            {room.item.name}
                         </Typography>
                         <Typography variant="body2">
                             North: {room.north}
