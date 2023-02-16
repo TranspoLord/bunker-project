@@ -1,10 +1,9 @@
 import React, { useState} from 'react';
 import './App.css';
 import { Snackbar, Alert} from '@mui/material';
-import Grow from '@mui/material/Grow';
 
 
-function SnackBarMessage (severity, message) {
+const SnackBarMessage = (severity, message) => {
     console.log("In snackbar" + message + " " + severity);
     const [open, setOpen] = useState(true);
 
@@ -29,5 +28,5 @@ function SnackBarMessage (severity, message) {
             </Snackbar>
         </div>
     );
-}
+};
 export default SnackBarMessage;
