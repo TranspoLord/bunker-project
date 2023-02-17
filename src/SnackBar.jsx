@@ -1,15 +1,18 @@
-import React, { useState} from 'react';
+import React, { useState, useContext} from 'react';
 import './App.css';
 import { Snackbar, Alert} from '@mui/material';
+import { Context } from './SnackBarStoreContext';
 
-
-const SnackBarMessage = (severity, message) => {
-    console.log("In snackbar" + message + " " + severity);
+const SnackBarMessage = () => {
+    const [state, dispatch] = useContext(Context);
+    
+    console.log("In snackbar" + state.message + " " + state.severity);
     const [open, setOpen] = useState(true);
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") return;
         setOpen(false);
+        dispatch({ type: "CLOSE" });
     };
 
     return (
@@ -19,11 +22,11 @@ const SnackBarMessage = (severity, message) => {
                     vertical: "bottom",
                     horizontal: "left",
                 }} 
-            open = {open}
+            open = {state.open}
             autoHideDuration = {6000}
             onClose = {handleClose}>
-                <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
-                    {message}
+                <Alert onClose={handleClose} severity={state.severity} sx={{ width: "100%" }}>
+                    {state.message}
                 </Alert>
             </Snackbar>
         </div>

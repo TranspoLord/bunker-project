@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import App from './App';
 import './App.css';
-import GameManager from './GameManager';
-import { BrowserRouter, Route, Link } from "react-router-dom";
-import { Routes } from 'react-router';
-import { createNull } from 'typescript';
+import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import { CardContent, CardActions, Typography } from '@mui/material';
-import SnackBarMessage from './SnackBar';
+import { Context } from './SnackBarStoreContext';
 
 const BunkerManager = () => {
     const [loadFile, setLoad] = useState(false)
@@ -18,6 +15,7 @@ const BunkerManager = () => {
     const [back, setBack] = useState(false)
     const [file, setFile] = useState(null);
     const [isValid, setIsValid] = useState(null);
+    const [state, dispatch] = useContext(Context);
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -73,7 +71,7 @@ const BunkerManager = () => {
     return (
         <div>
             <h1>Bunker Manager</h1>
-            <Button variant='contained' onClick={() => SnackBarMessage("Success","This is a message")} >
+            <Button variant='contained' onClick={() => {dispatch({type: "OPEN", severity: "success", message: "This was a success"})}} >
                 Test SnackBar
             </Button>
             <label htmlFor='fileInput'>

@@ -12,8 +12,8 @@ const reducer = (state, action) => {
         case "CLOSE":
             return {
                 ...state,
-                severity: null,
-                message: null,
+                severity: "success",
+                message: "",
                 open: false
             };
         default:
