@@ -1,11 +1,14 @@
 import { TextField, Box, Card, Button, CardContent, Typography, FormControl, DialogActions } from '@mui/material';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import SnackBar from './SnackBar';
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { Input, InputLabel, MenuItem, Select } from '@mui/material';
+import { Context } from './SnackBarStoreContext';
 
 function CreateBunker(props) {
+    const [state, dispatch] = useContext(Context);
+
     const [bunkerBool, setBunkerBool] = useState(props.isCreatingBunker);
     const [selectedBunker, setSelectedBunker] = useState(null);
     const [bunkerSaved, setBunkerSaved] = useState(false);
@@ -69,6 +72,7 @@ function CreateBunker(props) {
         setItemName("");
         setItemDescription("");
         console.log("Item added" + newItem.name + " " + newItem.description + " " + newItem.required);
+        dispatch({ type: "OPEN", severity: "success", message: "Item added" });
         handleCloseItem();
     }
 
@@ -82,12 +86,34 @@ function CreateBunker(props) {
 
     function handleBunkerSave() {
         //Save bunker to local storage here
-        console.log("Saving bunker to local storage")
+        console.log("Trying to save bunker to local storage")
+        if(bunkerName === "") {
+            dispatch({ type: "OPEN", severity: "error", message: "Bunker name cannot be empty" });
+            return;
+        }
         console.log(rooms)
         localStorage.setItem("bunker-" + bunkerName, JSON.stringify(rooms))
         localStorage.setItem("bunker-" + bunkerName + "-items", JSON.stringify(items))
         setBunkerBool(false)
         setBunkerSaved(true)
+        dispatch({ type: "OPEN", severity: "success", message: "Bunker saved" });
+    }
+
+    function handleEditRoom(index) {
+        console.log("Wanting to edit room " + index + " " + rooms[index].name)
+
+        if (newName === "") {
+            const newRooms = [...rooms];
+            const newRoom = newRooms[index];
+            setNewName(newRoom.name);
+            setNewNorth(newRoom.north);
+            setNewSouth(newRoom.south);
+            setNewEast(newRoom.east);
+            setNewWest(newRoom.west);
+            setNewRoomDescription(newRoom.description);
+            setNewRoomItem(newRoom.item);
+            handleRemoveRoom(index);
+        }
     }
 
     const getBasicBunkerInfo = () => {
@@ -219,6 +245,7 @@ function CreateBunker(props) {
                             West: {room.west}
                         </Typography>
                         <Button variant="contained" onClick={() => handleRemoveRoom(index)}>Remove Room</Button>
+                        <Button variant="contained" onClick={() => handleEditRoom(index)}>Edit Room</Button>
                     </CardContent>
                 </Card>
             ))}
