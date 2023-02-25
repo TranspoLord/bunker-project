@@ -9,13 +9,10 @@ import { Context } from './SnackBarStoreContext';
 function CreateBunker(props) {
     const [state, dispatch] = useContext(Context);
 
-    const [bunkerBool, setBunkerBool] = useState(props.isCreatingBunker);
-    const [selectedBunker, setSelectedBunker] = useState(null);
-    const [bunkerSaved, setBunkerSaved] = useState(false);
     const [bunkerName, setNewBunkerName] = useState("");
     const [bunkerDescription, setNewBunkerDescription] = useState("");
 
-    const [rooms, setRooms] = useState([]);
+    const [bunkerRooms, setRooms] = useState([]);
     const [newName, setNewName] = useState("");
     const [newNorth, setNewNorth] = useState("");
     const [newSouth, setNewSouth] = useState("");
@@ -24,7 +21,7 @@ function CreateBunker(props) {
     const [newRoomDescription, setNewRoomDescription] = useState("");
     const [newRoomItem, setNewRoomItem] = useState("");
 
-    const [items, setItems] = useState([]);
+    const [bunkerItems, setItems] = useState([]);
     const [openWindow, setOpenWindow] = useState(false);
     const [itemName, setItemName] = useState("");
     const [itemDescription, setItemDescription] = useState("");
@@ -43,7 +40,7 @@ function CreateBunker(props) {
             item: newRoomItem
         };
 
-        setRooms([...rooms, newRoom]);
+        setRooms([...bunkerRooms, newRoom]);
         setNewName("");
         setNewNorth("");
         setNewSouth("");
@@ -54,7 +51,7 @@ function CreateBunker(props) {
     }
 
     function handleRemoveRoom(index) {
-        const newRooms = [...rooms];
+        const newRooms = [...bunkerRooms];
         newRooms.splice(index, 1);
         setRooms(newRooms);
     }
@@ -68,7 +65,7 @@ function CreateBunker(props) {
             required: itemRequired
         };
 
-        setItems([...items, newItem]);
+        setItems([...bunkerItems, newItem]);
         setItemName("");
         setItemDescription("");
         console.log("Item added" + newItem.name + " " + newItem.description + " " + newItem.required);
@@ -84,26 +81,33 @@ function CreateBunker(props) {
         setOpenWindow(false);
     };
 
+    function BuildBunkerJSON() {
+        const bunker = {
+            name: bunkerName,
+            description: bunkerDescription,
+            items: bunkerItems,
+            rooms: bunkerRooms
+        };
+
+        return JSON.stringify(bunker);
+    }
+
     function handleBunkerSave() {
-        //Save bunker to local storage here
         console.log("Trying to save bunker to local storage")
         if(bunkerName === "") {
             dispatch({ type: "OPEN", severity: "error", message: "Bunker name cannot be empty" });
             return;
         }
-        console.log(rooms)
-        localStorage.setItem("bunker-" + bunkerName, JSON.stringify(rooms))
-        localStorage.setItem("bunker-" + bunkerName + "-items", JSON.stringify(items))
-        setBunkerBool(false)
-        setBunkerSaved(true)
+        console.log(bunkerRooms)
+        localStorage.setItem("bunker-" + bunkerName, BuildBunkerJSON());
         dispatch({ type: "OPEN", severity: "success", message: "Bunker saved" });
     }
 
     function handleEditRoom(index) {
-        console.log("Wanting to edit room " + index + " " + rooms[index].name)
+        console.log("Wanting to edit room " + index + " " + bunkerRooms[index].name)
 
         if (newName === "") {
-            const newRooms = [...rooms];
+            const newRooms = [...bunkerRooms];
             const newRoom = newRooms[index];
             setNewName(newRoom.name);
             setNewNorth(newRoom.north);
@@ -121,24 +125,12 @@ function CreateBunker(props) {
             <div>
                 <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
                     <h2>Basic Bunker Info</h2>
-                    <h4>Rooms: {rooms.length}</h4>
+                    <h4>Rooms: {bunkerRooms.length}</h4>
                     <TextField required margin="normal" id="outlined-basic" label="Bunker Name" variant="outlined" value={bunkerName} onChange={(e) => setNewBunkerName(e.target.value)} />
                     <TextField margin="normal" id="outlined-basic" label="Bunker Description" variant="outlined" value={bunkerDescription} onChange={(e) => setNewBunkerDescription(e.target.value)} />
                 </Box>
             </div>
         );
-    }
-
-    const getItemsFromLocalStorage = () => {
-        const items = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith("bunker-" + bunkerName + "-items")) {
-                items.push(JSON.parse(localStorage.getItem(key)));
-            }
-        }
-        setItems(items);
-        return items;
     }
 
     return (
@@ -183,7 +175,7 @@ function CreateBunker(props) {
                                 onChange={(e) => setItemRequired(e.target.value)}
                             >
                                 <MenuItem value={"None"}>None</MenuItem>
-                                {Object.entries(items).map(([key, value]) => (
+                                {Object.entries(bunkerItems).map(([key, value]) => (
                                     <MenuItem value={value.name}>{value.name}</MenuItem>
                                 ))}
                             </Select>
@@ -212,7 +204,7 @@ function CreateBunker(props) {
                         value={itemRequired}
                         label="Room Item"
                         onChange={(e) => setItemRequired(e.target.value)}>
-                        {Object.entries(items).map(([key, value]) => (
+                        {Object.entries(bunkerItems).map(([key, value]) => (
                             <MenuItem value={value.name}>{value.name}</MenuItem>
                         ))}
                         <MenuItem value={"None"}>None</MenuItem>
@@ -220,7 +212,7 @@ function CreateBunker(props) {
                 </FormControl>
                 <Button variant="contained" onClick={handleAddRoom}>Add Room</Button>
             </Box>
-            {rooms.map((room, index) => (
+            {bunkerRooms.map((room, index) => (
                 <Card sx={{ minWidth: 275 }} key={index}>
                     <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

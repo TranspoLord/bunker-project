@@ -14,20 +14,30 @@ const BunkerManager = () => {
     const [loadFile, setLoad] = useState(false)
     const [createBunker, setCreate] = useState(false)
     const [editBunker, setEdit] = useState(false)
-    const [bunkerList, setBunkerList] = useState(Object.keys(localStorage))
+    const [bunkerList, setBunkerList] = useState([])
     const [back, setBack] = useState(false)
     const [file, setFile] = useState(null);
     const [isValid, setIsValid] = useState(null);
     const [state, dispatch] = useContext(Context);
     const [openWindow, setOpenWindow] = useState(false)
 
-    function BunkerLoadFromLocal() {
-        const localData = JSON.parse(localStorage.getItem()) || [];
 
-        localData.filter(data => data.bunker).forEach(data => {
-            const bunker = data.bunker;
-            bunkerList[bunker.name] = bunker;
-        });
+    //TODO Add a way to load bunkers from local storage
+    function BunkerLoadFromLocal() {
+        console.log("Loading bunkers from local storage")
+        for(let i=0; i<localStorage.length; i++) {
+            const key = localStorage.key(i);
+            console.log("Key: " + key)
+            if(key.startsWith("bunker-")) {
+                const bunkerName = key.substring('bunker-'.length);
+                console.log("Bunker name: " + bunkerName)
+                const dataString = localStorage.getItem(key);
+                const data = JSON.parse(dataString);
+                console.log("Bunker data: " + data)
+                bunkerList[bunkerName] = data;
+            }
+        }
+        console.log("Bunker list: " + bunkerList)
     }
 
     const handleFileChange = (event) => {
@@ -113,6 +123,7 @@ const BunkerManager = () => {
 
     return (
         <div>
+            {BunkerLoadFromLocal()}
             <h1>Bunker Manager</h1>
             <label htmlFor='fileInput'>
                 <Button variant='contained' onClick={() => { document.getElementById("fileInput").click() }} >
