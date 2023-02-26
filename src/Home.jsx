@@ -16,13 +16,6 @@ function Home() {
           Manage Bunkers
         </button>
       </Link>
-      
-      {/* <button onClick={
-        () => { setDebug(!debug) }
-      } className="debugButton">
-        Set Debug Outputs
-      </button>
-      <p>Debug state: {debug ? "True" : "False"}</p> */}
     </div>
   )
 }

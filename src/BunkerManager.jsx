@@ -21,24 +21,24 @@ const BunkerManager = () => {
     const [state, dispatch] = useContext(Context);
     const [openWindow, setOpenWindow] = useState(false)
 
-
-    //TODO Add a way to load bunkers from local storage
-    function BunkerLoadFromLocal() {
+    useEffect(() => {
         console.log("Loading bunkers from local storage")
+        BunkerLoadFromLocal()
+    }, []);
+    function BunkerLoadFromLocal() {
         for(let i=0; i<localStorage.length; i++) {
             const key = localStorage.key(i);
             console.log("Key: " + key)
             if(key.startsWith("bunker-")) {
                 const bunkerName = key.substring('bunker-'.length);
-                console.log("Bunker name: " + bunkerName)
                 const dataString = localStorage.getItem(key);
                 const data = JSON.parse(dataString);
-                console.log("Bunker data: " + data)
-                bunkerList[bunkerName] = data;
+                setBunkerList(bunkerList => bunkerList.concat(data))
             }
         }
         console.log("Bunker list: " + bunkerList)
     }
+
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -71,9 +71,9 @@ const BunkerManager = () => {
 
     function handleRemoveBunker(index){
         const newBunkers = [...bunkerList]
+        localStorage.removeItem("bunker-" + bunkerList[index].name)
         newBunkers.splice(index, 1)
         setBunkerList(newBunkers)
-        localStorage.removeItem(bunkerList[index])
         console.log(JSON.stringify(localStorage))
         handleClose()
         dispatch({ type: "OPEN", severity: "success", message: "Bunker deleted" });
@@ -93,7 +93,7 @@ const BunkerManager = () => {
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {bunker}
+                        {bunker.name}
                     </Typography>
                     <Typography variant="body2">
                         Room Count: NYI
@@ -123,7 +123,6 @@ const BunkerManager = () => {
 
     return (
         <div>
-            {BunkerLoadFromLocal()}
             <h1>Bunker Manager</h1>
             <label htmlFor='fileInput'>
                 <Button variant='contained' onClick={() => { document.getElementById("fileInput").click() }} >
