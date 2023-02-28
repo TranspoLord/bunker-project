@@ -1,13 +1,13 @@
 import { TextField, Box, Card, Button, CardContent, Typography, FormControl, DialogActions } from '@mui/material';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import SnackBar from './SnackBar';
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
-import { Input, InputLabel, MenuItem, Select } from '@mui/material';
+import { InputLabel, MenuItem, Select, FormControlLabel, Checkbox } from '@mui/material';
 import { Context } from './SnackBarStoreContext';
 
 function CreateBunker(props) {
     const [state, dispatch] = useContext(Context);
+    const [bunkerInfoOpen, setBunkerInfoOpen] = useState(false);
 
     const [bunkerName, setNewBunkerName] = useState("");
     const [bunkerDescription, setNewBunkerDescription] = useState("");
@@ -22,10 +22,17 @@ function CreateBunker(props) {
     const [newRoomItem, setNewRoomItem] = useState("");
 
     const [bunkerItems, setItems] = useState([]);
+    const [itemInfoOpen, setItemInfoDialogOpen] = useState(false);
     const [openWindow, setOpenWindow] = useState(false);
     const [itemName, setItemName] = useState("");
     const [itemDescription, setItemDescription] = useState("");
     const [itemRequired, setItemRequired] = useState("");
+    const [itemPickups, setItemPickups] = useState([]);
+    const [alreadyPickedUp, setAlreadyPickedUp] = useState("");
+    const [bacon, setBacon] = useState(false);
+    const [itemNeeded, setItemNeeded] = useState("");
+    const [itemPickupDescription, setItemPickupDescription] = useState("");
+
 
     function handleAddRoom(e) {
         e.preventDefault();
@@ -62,7 +69,12 @@ function CreateBunker(props) {
         const newItem = {
             name: itemName,
             description: itemDescription,
-            required: itemRequired
+            required: itemRequired,
+            pickups: itemPickups,
+            descAlreadyHave: alreadyPickedUp,
+            descItemNeeded: itemNeeded,
+            descItemPickup: itemPickupDescription,
+            baconItem: bacon,
         };
 
         setItems([...bunkerItems, newItem]);
@@ -73,6 +85,8 @@ function CreateBunker(props) {
         handleCloseItem();
     }
 
+    //TODO: Remove a specific item from the list
+
     const handleItemOpen = () => {
         setOpenWindow(true);
     };
@@ -80,6 +94,24 @@ function CreateBunker(props) {
     const handleCloseItem = () => {
         setOpenWindow(false);
     };
+
+    const handleItemInfoOpen = () => {
+        setItemInfoDialogOpen(true);
+    };
+
+    const handleItemInfoClose = () => {
+        setItemInfoDialogOpen(false);
+    };
+
+    const handleBunkerInfoOpen = () => {
+        setBunkerInfoOpen(true);
+    };
+
+    const handleBunkerInfoClose = () => {
+        setBunkerInfoOpen(false);
+    };
+
+    
 
     function BuildBunkerJSON() {
         const bunker = {
@@ -94,7 +126,7 @@ function CreateBunker(props) {
 
     function handleBunkerSave() {
         console.log("Trying to save bunker to local storage")
-        if(bunkerName === "") {
+        if (bunkerName === "") {
             dispatch({ type: "OPEN", severity: "error", message: "Bunker name cannot be empty" });
             return;
         }
@@ -139,6 +171,15 @@ function CreateBunker(props) {
             <Link to="/manage"><Button variant="contained">Back</Button></Link>
             <Button variant="contained" onClick={handleBunkerSave}>Save Bunker</Button>
             <Button variant="contained" onClick={handleItemOpen}>Create Item</Button>
+            <Button variant="contained" onClick={handleBunkerInfoOpen}>Bunker Info</Button>
+            <Dialog open={bunkerInfoOpen} onClose={handleBunkerInfoClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Bunker Info</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        This is a placeholder for bunker info.
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
             <Dialog open={openWindow} onClose={handleCloseItem} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Create Item</DialogTitle>
                 <DialogContent>
@@ -165,6 +206,53 @@ function CreateBunker(props) {
                             value={itemDescription}
                             onChange={(e) => setItemDescription(e.target.value)}
                         />
+                        <TextField
+                            margin="dense"
+                            id="itemPickupsList"
+                            label="Item Pickup List - Seperate with commas"
+                            type="text"
+                            fullWidth
+                            value={itemPickups}
+                            onChange={(e) => setItemPickups(e.target.value)}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="alreadyPickedUp"
+                            label="Already Picked Up Description"
+                            type="text"
+                            fullWidth
+                            value={alreadyPickedUp}
+                            onChange={(e) => setAlreadyPickedUp(e.target.value)}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="itemNeeded"
+                            label="Item Needed Description"
+                            type="text"
+                            fullWidth
+                            value={itemNeeded}
+                            onChange={(e) => setItemNeeded(e.target.value)}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="itemPickupedUp"
+                            label="Item Picked Up Description"
+                            type="text"
+                            fullWidth
+                            value={itemPickupDescription}
+                            onChange={(e) => setItemPickupDescription(e.target.value)}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={bacon}
+                                    onChange={(e) => setBacon(e.target.checked)}
+                                    name="bacon"
+                                    color="primary"
+                                />
+                            }
+                            label="Bacon Item"
+                        />
                         <FormControl fullWidth>
                             <InputLabel id="select-label">Needed to Pickup</InputLabel>
                             <Select
@@ -172,7 +260,7 @@ function CreateBunker(props) {
                                 id="select"
                                 value={itemRequired}
                                 label="Required Item"
-                                onChange={(e) => setItemRequired(e.target.value)}
+                                onChange={(e) => setItemRequired(e.target.value.name)}
                             >
                                 <MenuItem value={"None"}>None</MenuItem>
                                 {Object.entries(bunkerItems).map(([key, value]) => (
@@ -181,12 +269,23 @@ function CreateBunker(props) {
                             </Select>
                         </FormControl>
                         <DialogActions>
+                            <Button onClick={handleItemInfoOpen}>Item Info</Button>
                             <Button onClick={handleCloseItem}>Cancel</Button>
                             <Button onClick={handleAddItem} type="submit">Submit</Button>
                         </DialogActions>
                     </form>
                 </DialogContent>
             </Dialog>
+            <Dialog open={itemInfoOpen} onClose={handleItemInfoClose} aria-labelledby="form-dialog-title">  
+                <DialogTitle id="form-dialog-title">Item Info</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Placeholder Text
+                        Bacon Item means its required for endgame
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
+
             {getBasicBunkerInfo()}
             <h2>Rooms</h2>
             <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">

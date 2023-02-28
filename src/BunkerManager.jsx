@@ -15,7 +15,6 @@ const BunkerManager = () => {
     const [createBunker, setCreate] = useState(false)
     const [editBunker, setEdit] = useState(false)
     const [bunkerList, setBunkerList] = useState([])
-    const [back, setBack] = useState(false)
     const [file, setFile] = useState(null);
     const [isValid, setIsValid] = useState(null);
     const [state, dispatch] = useContext(Context);
@@ -140,6 +139,7 @@ const BunkerManager = () => {
                     Back
                 </Button>
             </Link>
+            
             
             {bunkerList.map((bunker, index) => (
                 <div key={index}>
