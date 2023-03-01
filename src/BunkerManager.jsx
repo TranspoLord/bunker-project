@@ -95,8 +95,10 @@ const BunkerManager = () => {
                         {bunker.name}
                     </Typography>
                     <Typography variant="body2">
-                        Room Count: NYI
-                        Description: NYI
+                        Room Count: {bunker.rooms.length}
+                    </Typography>
+                    <Typography variant="body2">
+                        Description: {bunker.description}
                     </Typography>
                 </CardContent>
                 <CardActions>

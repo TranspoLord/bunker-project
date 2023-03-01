@@ -27,16 +27,24 @@ function CreateBunker(props) {
     const [itemName, setItemName] = useState("");
     const [itemDescription, setItemDescription] = useState("");
     const [itemRequired, setItemRequired] = useState("");
-    const [itemPickups, setItemPickups] = useState([]);
+    const [itemPickups, setItemPickups] = useState("");
     const [alreadyPickedUp, setAlreadyPickedUp] = useState("");
     const [bacon, setBacon] = useState(false);
     const [itemNeeded, setItemNeeded] = useState("");
     const [itemPickupDescription, setItemPickupDescription] = useState("");
+    const [itemIncludeDefaults, setItemIncludePickups] = useState(true);
 
 
     function handleAddRoom(e) {
         e.preventDefault();
-        if (newName === "" || newRoomDescription === "") { return; }
+        if (newName === "" || newRoomDescription === "") {
+            dispatch({ type: "OPEN", severity: "error", message: "Room name and description cannot be empty" });
+            return;
+        }
+        if (newNorth === "" && newSouth === "" && newEast === "" && newWest === "") {
+            dispatch({ type: "OPEN", severity: "error", message: "Room must have at least one exit" });
+            return;
+        }
         const newRoom = {
             name: newName,
             north: newNorth,
@@ -65,12 +73,16 @@ function CreateBunker(props) {
 
     function handleAddItem(e) {
         e.preventDefault();
-        if (itemName === "" || itemDescription === "") { return; }
+        if (itemName === "" || itemDescription === "") {
+            dispatch({ type: "OPEN", severity: "error", message: "Item name and description cannot be empty" });
+            return;
+        }
         const newItem = {
             name: itemName,
             description: itemDescription,
             required: itemRequired,
             pickups: itemPickups,
+            defaultPickups: itemIncludeDefaults,
             descAlreadyHave: alreadyPickedUp,
             descItemNeeded: itemNeeded,
             descItemPickup: itemPickupDescription,
@@ -111,7 +123,7 @@ function CreateBunker(props) {
         setBunkerInfoOpen(false);
     };
 
-    
+
 
     function BuildBunkerJSON() {
         const bunker = {
@@ -128,6 +140,10 @@ function CreateBunker(props) {
         console.log("Trying to save bunker to local storage")
         if (bunkerName === "") {
             dispatch({ type: "OPEN", severity: "error", message: "Bunker name cannot be empty" });
+            return;
+        }
+        if (bunkerRooms.length < 3) {
+            dispatch({ type: "OPEN", severity: "error", message: "Bunker must have at least 2 rooms" });
             return;
         }
         console.log(bunkerRooms)
@@ -152,6 +168,22 @@ function CreateBunker(props) {
         }
     }
 
+    const handleItemPickupListDefault = (props) => {
+        console.log("Changing default pickups")
+        if (itemIncludeDefaults) {
+            console.log("Changing to false")
+            if (itemPickups === "") {
+                dispatch({ type: "OPEN", severity: "error", message: "Cannot change default pickups when there are no custom pickups" });
+                setItemIncludePickups(true);
+            }
+            else
+                setItemIncludePickups(false);
+        }
+        else
+            setItemIncludePickups(true);
+
+    };
+
     const getBasicBunkerInfo = () => {
         return (
             <div>
@@ -165,6 +197,95 @@ function CreateBunker(props) {
         );
     }
 
+    const handleTestBunker = () => {
+        console.log("Trying to test bunker")
+        if (bunkerName === "") {
+            dispatch({ type: "OPEN", severity: "error", message: "Bunker name cannot be empty" });
+        }
+        if (bunkerRooms.length < 2) {
+            dispatch({ type: "OPEN", severity: "error", message: "Bunker must have at least 2 rooms" });
+        }
+        if (bunkerItems.length < 1) {
+            dispatch({ type: "OPEN", severity: "error", message: "Bunker must have at least 1 item" });
+        }
+        for (let i = 0; i < bunkerRooms.length; i++) {
+            if (bunkerRooms[i].north === bunkerRooms[i].name || bunkerRooms[i].south === bunkerRooms[i].name || bunkerRooms[i].east === bunkerRooms[i].name || bunkerRooms[i].west === bunkerRooms[i].name) {
+                dispatch({ type: "OPEN", severity: "error", message: "Bunker room " + bunkerRooms[i].name + " has an exit to itself" });
+            }
+        }
+        console.log("Testing rooms")
+        for (let i = 0; i < bunkerRooms.length; i++) {
+            console.log("Testing room " + bunkerRooms[i].name)
+            if (bunkerRooms[i].north !== "") {
+                let roomNorthFound = false;
+                console.log("Testing north in room " + bunkerRooms[i].name)
+                for (let x = 0; x < bunkerRooms.length; x++) {
+                    if (bunkerRooms[i].north === bunkerRooms[x].name) {
+                        roomNorthFound = true;
+                    }
+                }
+                if (!roomNorthFound) {
+                    dispatch({ type: "OPEN", severity: "error", message: "Bunker room " + bunkerRooms[i].name + " has an exit to a room that does not exist" });
+                }
+            }
+
+            if (bunkerRooms[i].south !== "") {
+                let roomSouthFound = false;
+                console.log("Testing south in room " + bunkerRooms[i].name)
+                for (let x = 0; x < bunkerRooms.length; x++) {
+                    if (bunkerRooms[i].south === bunkerRooms[x].name) {
+                        roomSouthFound = true;
+                    }
+                }
+                if (!roomSouthFound) {
+                    dispatch({ type: "OPEN", severity: "error", message: "Bunker room " + bunkerRooms[i].name + " has an exit to a room that does not exist" });
+                }
+            }
+            console.log("Testing east in room " + bunkerRooms[i].name)
+            if (bunkerRooms[i].east !== "") {
+                let roomEastFound = false;
+                for (let x = 0; x < bunkerRooms.length; x++) {
+                    if (bunkerRooms[i].east === bunkerRooms[x].name) {
+                        roomEastFound = true;
+                    }
+                }
+                if (!roomEastFound) {
+                    dispatch({ type: "OPEN", severity: "error", message: "Bunker room " + bunkerRooms[i].name + " has an exit to a room that does not exist" });
+                }
+            }
+            console.log("Testing west in room " + bunkerRooms[i].name)
+            if (bunkerRooms[i].west !== "") {
+                let roomWestFound = false;
+                for (let x = 0; x < bunkerRooms.length; x++) {
+                    if (bunkerRooms[i].west === bunkerRooms[x].name) {
+                        roomWestFound = true;
+                    }
+                }
+                if (!roomWestFound) {
+                    dispatch({ type: "OPEN", severity: "error", message: "Bunker room " + bunkerRooms[i].name + " has an exit to a room that does not exist" });
+                }
+            }
+
+        }
+
+        console.log("Testing items")
+        for (let i = 0; i < bunkerItems.length; i++) {
+            let itemFound = false;
+            for (let i = 0; i < bunkerRooms.length; i++) {
+                if (bunkerRooms[i].item !== "") {
+                    if (bunkerRooms[i].item === bunkerItems[i].name) {
+                        console.log("Item " + bunkerItems[i].name + " is in room " + bunkerRooms[i].name)
+                        itemFound = true;
+                    }
+                }
+            }
+            if (!itemFound) {
+                dispatch({ type: "OPEN", severity: "warning", message: "Item " + bunkerItems[i].name + " is not in any room" });
+            }
+        }
+
+    }
+
     return (
         <div>
             <h1>Create Bunker</h1>
@@ -172,6 +293,8 @@ function CreateBunker(props) {
             <Button variant="contained" onClick={handleBunkerSave}>Save Bunker</Button>
             <Button variant="contained" onClick={handleItemOpen}>Create Item</Button>
             <Button variant="contained" onClick={handleBunkerInfoOpen}>Bunker Info</Button>
+            <Button variant="contained" onClick={handleTestBunker}>Test Bunker</Button>
+
             <Dialog open={bunkerInfoOpen} onClose={handleBunkerInfoClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Bunker Info</DialogTitle>
                 <DialogContent>
@@ -192,6 +315,7 @@ function CreateBunker(props) {
                             margin="dense"
                             id="name"
                             label="Item Name"
+                            required
                             type="text"
                             fullWidth
                             value={itemName}
@@ -201,6 +325,7 @@ function CreateBunker(props) {
                             margin="dense"
                             id="description"
                             label="Item Description"
+                            required
                             type="text"
                             fullWidth
                             value={itemDescription}
@@ -214,6 +339,17 @@ function CreateBunker(props) {
                             fullWidth
                             value={itemPickups}
                             onChange={(e) => setItemPickups(e.target.value)}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={itemIncludeDefaults}
+                                    onChange={() => handleItemPickupListDefault(props)}
+                                    name="checkedB"
+                                    color="primary"
+                                />
+                            }
+                            label="Include Default Pickups"
                         />
                         <TextField
                             margin="dense"
@@ -262,7 +398,6 @@ function CreateBunker(props) {
                                 label="Required Item"
                                 onChange={(e) => setItemRequired(e.target.value.name)}
                             >
-                                <MenuItem value={"None"}>None</MenuItem>
                                 {Object.entries(bunkerItems).map(([key, value]) => (
                                     <MenuItem value={value.name}>{value.name}</MenuItem>
                                 ))}
@@ -276,12 +411,32 @@ function CreateBunker(props) {
                     </form>
                 </DialogContent>
             </Dialog>
-            <Dialog open={itemInfoOpen} onClose={handleItemInfoClose} aria-labelledby="form-dialog-title">  
+            <Dialog open={itemInfoOpen} onClose={handleItemInfoClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Item Info</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Placeholder Text
-                        Bacon Item means its required for endgame
+                        <h3>Defaults</h3>
+                        <p>Pickup List, Already Picked Up, Item Needed, and Item Pick Up all have default values. If you don't put anything in, they will be set to default. Defaults
+                            are basic pickup words with the descriptions being the item name and the corresponding title.</p>
+                        <h4>Item Name</h4>
+                        <p>Is the name of the item</p>
+                        <h4>Item Description</h4>
+                        <p>Is a short description of the item. This will be played on entry to the room, when the item is available for pickup.</p>
+                        <h4>Include Default Pickups</h4>
+                        <p>If true, the default pickup words will be added to the pickup list. This will not matter if there is no user specified pickup words.</p>
+                        <h4>Item Pickup List</h4>
+                        <p>Is a list of words/sentences that can be used to pickup this item. Seperate each group with a comma.</p>
+                        <h4>Already Picked Up Description</h4>
+                        <p>This is a description that will be played if the player tries to pickup the item again.</p>
+                        <h4>Item Needed Description</h4>
+                        <p>This is a description that will be played if the player tries to aquire the item without having the required item that it needs.</p>
+                        <h4>Item Picked Up Description</h4>
+                        <p>This is a description that will be played when the player picks up the item.</p>
+                        <h4>Bacon Item</h4>
+                        <p>If true, the item will be required to complete the bunker. You can have none or all your items be required.</p>
+                        <h4>Needed to Pickup</h4>
+                        <p>This is the item that is required to pickup this item. If none is needed, leave blank.</p>
+
                     </DialogContentText>
                 </DialogContent>
             </Dialog>
@@ -300,13 +455,14 @@ function CreateBunker(props) {
                     <Select
                         labelId="RoomItemLabel"
                         id="select"
-                        value={itemRequired}
+                        value={newRoomItem}
                         label="Room Item"
                         onChange={(e) => setItemRequired(e.target.value)}>
+                        <MenuItem value={"None"}>None</MenuItem>
                         {Object.entries(bunkerItems).map(([key, value]) => (
                             <MenuItem value={value.name}>{value.name}</MenuItem>
+
                         ))}
-                        <MenuItem value={"None"}>None</MenuItem>
                     </Select>
                 </FormControl>
                 <Button variant="contained" onClick={handleAddRoom}>Add Room</Button>
@@ -321,7 +477,7 @@ function CreateBunker(props) {
                             {room.name}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            {room.item.name}
+                            Item: {room.item}
                         </Typography>
                         <Typography variant="body2">
                             North: {room.north}

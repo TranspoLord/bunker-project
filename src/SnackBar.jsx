@@ -5,8 +5,6 @@ import { Context } from './SnackBarStoreContext';
 
 const SnackBarMessage = () => {
     const [state, dispatch] = useContext(Context);
-    
-    console.log("In snackbar" + state.message + " " + state.severity);
     const [open, setOpen] = useState(true);
 
     const handleClose = (event, reason) => {
