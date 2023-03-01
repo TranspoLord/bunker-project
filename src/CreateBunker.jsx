@@ -1,9 +1,11 @@
-import { TextField, Box, Card, Button, CardContent, Typography, FormControl, DialogActions } from '@mui/material';
+import { TextField, Box, Card, Button, CardContent, Typography, FormControl, DialogActions, ListItemText } from '@mui/material';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { InputLabel, MenuItem, Select, FormControlLabel, Checkbox } from '@mui/material';
 import { Context } from './SnackBarStoreContext';
+import { List, Collapse, ListItemButton } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 function CreateBunker(props) {
     const [state, dispatch] = useContext(Context);
@@ -33,6 +35,9 @@ function CreateBunker(props) {
     const [itemNeeded, setItemNeeded] = useState("");
     const [itemPickupDescription, setItemPickupDescription] = useState("");
     const [itemIncludeDefaults, setItemIncludePickups] = useState(true);
+    const [itemListOpen, setItemListOpen] = useState(false);
+    const [itemListExpanded, setItemListExpanded] = useState(false);
+    const [itemSecondaryDelete, setItemSecondaryDelete] = useState(false);
 
 
     function handleAddRoom(e) {
@@ -97,7 +102,11 @@ function CreateBunker(props) {
         handleCloseItem();
     }
 
-    //TODO: Remove a specific item from the list
+    function handleDeleteItem(index) {
+        const newItems = [...bunkerItems];
+        newItems.splice(index, 1);
+        setItems(newItems);
+    }
 
     const handleItemOpen = () => {
         setOpenWindow(true);
@@ -122,6 +131,28 @@ function CreateBunker(props) {
     const handleBunkerInfoClose = () => {
         setBunkerInfoOpen(false);
     };
+
+    const handleItemListOpen = () => {
+        setItemListOpen(true);
+    };
+
+    const handleItemListClose = () => {
+        setItemListOpen(false);
+    };
+
+    const handleItemListExpand = () => {
+        setItemListExpanded(!itemListExpanded);
+    };
+
+    const handleItemSecondaryDeleteOpen = () => {
+        setItemSecondaryDelete(true);
+    };
+
+    const handleItemSecondaryDeleteClose = () => {
+        setItemSecondaryDelete(false);
+    };
+
+
 
 
 
@@ -292,6 +323,7 @@ function CreateBunker(props) {
             <Link to="/manage"><Button variant="contained">Back</Button></Link>
             <Button variant="contained" onClick={handleBunkerSave}>Save Bunker</Button>
             <Button variant="contained" onClick={handleItemOpen}>Create Item</Button>
+            <Button variant="contained" onClick={handleItemListOpen}>Item List</Button>
             <Button variant="contained" onClick={handleBunkerInfoOpen}>Bunker Info</Button>
             <Button variant="contained" onClick={handleTestBunker}>Test Bunker</Button>
 
@@ -440,6 +472,54 @@ function CreateBunker(props) {
                     </DialogContentText>
                 </DialogContent>
             </Dialog>
+            <Dialog open={itemListOpen} onClose={handleItemListClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Item List</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} component="nav" aria-label="main item list">
+                            {Object.entries(bunkerItems).map(([key, value]) => (
+                                <>
+                                    <Box sx={{ display: 'flex' }}>
+                                        <ListItemText primary={value.name}></ListItemText>
+                                        <ListItemButton onClick={handleItemListExpand}>
+                                            {itemListExpanded ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </Box>
+                                    <Collapse in={itemListExpanded} timeout="auto" unmountOnExit>
+                                        <List component="div" disablePadding>
+                                            <ListItemButton sx={{ pl: 4, display: 'block' }}>
+                                                <p><b>Description: </b>{value.description}</p>
+                                                <p><b>Pickup Words: </b>{value.pickups}</p>
+                                                <p><b>Already Picked Up Description: </b>{value.descAlreadyHave}</p>
+                                                <p><b>Item Needed Description: </b>{value.descItemNeeded}</p>
+                                                <p><b>Item Picked Up Description: </b>{value.descItemPickup}</p>
+                                                <p><b>Bacon Item: </b>{value.baconItem ? "Yes" : "No"}</p>
+                                                <p><b>Item Required: </b>{value.required}</p>
+                                            </ListItemButton>
+                                            <Button onClick={handleItemSecondaryDeleteOpen}>Delete Item</Button>
+                                            <Dialog open={itemSecondaryDelete} onClose={handleItemSecondaryDeleteClose} aria-labelledby="form-dialog-title">
+                                                <DialogTitle id="form-dialog-title">Delete Item</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText>
+                                                        <p>Are you sure you want to delete this item?</p>
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={handleItemSecondaryDeleteClose}>Cancel</Button>
+                                                    <Button onClick={() => handleDeleteItem(key)}>Delete</Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                        </List>
+                                    </Collapse>
+                                </>
+                            ))}
+                        </List>
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
+
+
+
 
             {getBasicBunkerInfo()}
             <h2>Rooms</h2>
