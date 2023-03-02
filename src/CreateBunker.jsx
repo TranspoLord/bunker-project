@@ -25,7 +25,7 @@ function CreateBunker(props) {
 
     const [bunkerItems, setItems] = useState([]);
     const [itemInfoOpen, setItemInfoDialogOpen] = useState(false);
-    const [openWindow, setOpenWindow] = useState(false);
+    const [itemCreationOpen, setOpenWindow] = useState(false);
     const [itemName, setItemName] = useState("");
     const [itemDescription, setItemDescription] = useState("");
     const [itemRequired, setItemRequired] = useState("");
@@ -40,6 +40,7 @@ function CreateBunker(props) {
     const [itemSecondaryDelete, setItemSecondaryDelete] = useState(false);
 
 
+    //Adds a room to the bunkerRooms array
     function handleAddRoom(e) {
         e.preventDefault();
         if (newName === "" || newRoomDescription === "") {
@@ -70,12 +71,14 @@ function CreateBunker(props) {
         setNewRoomItem("");
     }
 
+    //Deletes a room from the bunkerRooms array
     function handleRemoveRoom(index) {
         const newRooms = [...bunkerRooms];
         newRooms.splice(index, 1);
         setRooms(newRooms);
     }
 
+    //Adds an item to the bunkerItems array
     function handleAddItem(e) {
         e.preventDefault();
         if (itemName === "" || itemDescription === "") {
@@ -102,12 +105,15 @@ function CreateBunker(props) {
         handleCloseItem();
     }
 
+    //Deletes an item from the bunkerItems array
     function handleDeleteItem(index) {
         const newItems = [...bunkerItems];
         newItems.splice(index, 1);
         setItems(newItems);
     }
 
+
+    //Misc handle functions for the dialog boxes
     const handleItemOpen = () => {
         setOpenWindow(true);
     };
@@ -155,7 +161,7 @@ function CreateBunker(props) {
 
 
 
-
+    //Builds the JSON object for the bunker
     function BuildBunkerJSON() {
         const bunker = {
             name: bunkerName,
@@ -167,6 +173,7 @@ function CreateBunker(props) {
         return JSON.stringify(bunker);
     }
 
+    //Saves the bunker to local storage
     function handleBunkerSave() {
         console.log("Trying to save bunker to local storage")
         if (bunkerName === "") {
@@ -182,6 +189,7 @@ function CreateBunker(props) {
         dispatch({ type: "OPEN", severity: "success", message: "Bunker saved" });
     }
 
+    //Handles the logic for editing a room
     function handleEditRoom(index) {
         console.log("Wanting to edit room " + index + " " + bunkerRooms[index].name)
 
@@ -199,6 +207,7 @@ function CreateBunker(props) {
         }
     }
 
+    //Handles the logic for including default pickups
     const handleItemPickupListDefault = (props) => {
         console.log("Changing default pickups")
         if (itemIncludeDefaults) {
@@ -215,6 +224,7 @@ function CreateBunker(props) {
 
     };
 
+    //Renders the basic bunker info near the top of the page
     const getBasicBunkerInfo = () => {
         return (
             <div>
@@ -228,6 +238,7 @@ function CreateBunker(props) {
         );
     }
 
+    //Runs a few logic checks to make sure the bunker is valid. Not 100% foolproof, but should catch most errors
     const handleTestBunker = () => {
         console.log("Trying to test bunker")
         if (bunkerName === "") {
@@ -327,6 +338,7 @@ function CreateBunker(props) {
             <Button variant="contained" onClick={handleBunkerInfoOpen}>Bunker Info</Button>
             <Button variant="contained" onClick={handleTestBunker}>Test Bunker</Button>
 
+            {/*Contains the dialog box for bunker information/requirements*/}
             <Dialog open={bunkerInfoOpen} onClose={handleBunkerInfoClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Bunker Info</DialogTitle>
                 <DialogContent>
@@ -335,7 +347,9 @@ function CreateBunker(props) {
                     </DialogContentText>
                 </DialogContent>
             </Dialog>
-            <Dialog open={openWindow} onClose={handleCloseItem} aria-labelledby="form-dialog-title">
+
+            {/*Contains the dialog box for item creation*/}
+            <Dialog open={itemCreationOpen} onClose={handleCloseItem} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Create Item</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -346,6 +360,7 @@ function CreateBunker(props) {
                             autoFocus
                             margin="dense"
                             id="name"
+                            key="name"
                             label="Item Name"
                             required
                             type="text"
@@ -356,6 +371,7 @@ function CreateBunker(props) {
                         <TextField
                             margin="dense"
                             id="description"
+                            key="description"
                             label="Item Description"
                             required
                             type="text"
@@ -366,6 +382,7 @@ function CreateBunker(props) {
                         <TextField
                             margin="dense"
                             id="itemPickupsList"
+                            key="itemPickupsList"
                             label="Item Pickup List - Seperate with commas"
                             type="text"
                             fullWidth
@@ -379,6 +396,7 @@ function CreateBunker(props) {
                                     onChange={() => handleItemPickupListDefault(props)}
                                     name="checkedB"
                                     color="primary"
+                                    key="itemIncludeDefaults"
                                 />
                             }
                             label="Include Default Pickups"
@@ -386,6 +404,7 @@ function CreateBunker(props) {
                         <TextField
                             margin="dense"
                             id="alreadyPickedUp"
+                            key="alreadyPickedUp"
                             label="Already Picked Up Description"
                             type="text"
                             fullWidth
@@ -395,6 +414,7 @@ function CreateBunker(props) {
                         <TextField
                             margin="dense"
                             id="itemNeeded"
+                            key="itemNeeded"
                             label="Item Needed Description"
                             type="text"
                             fullWidth
@@ -403,7 +423,8 @@ function CreateBunker(props) {
                         />
                         <TextField
                             margin="dense"
-                            id="itemPickupedUp"
+                            id="itemPickedUp"
+                            key="itemPickedUp"
                             label="Item Picked Up Description"
                             type="text"
                             fullWidth
@@ -417,6 +438,7 @@ function CreateBunker(props) {
                                     onChange={(e) => setBacon(e.target.checked)}
                                     name="bacon"
                                     color="primary"
+                                    key="bacon"
                                 />
                             }
                             label="Bacon Item"
@@ -426,12 +448,14 @@ function CreateBunker(props) {
                             <Select
                                 labelId="select-label"
                                 id="select"
+                                key="select"
                                 value={itemRequired}
                                 label="Required Item"
                                 onChange={(e) => setItemRequired(e.target.value.name)}
                             >
                                 {Object.entries(bunkerItems).map(([key, value]) => (
-                                    <MenuItem value={value.name}>{value.name}</MenuItem>
+                                    
+                                    <MenuItem key={key} value={value.name}>{value.name}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
@@ -443,6 +467,8 @@ function CreateBunker(props) {
                     </form>
                 </DialogContent>
             </Dialog>
+
+            {/*Contains the dialog box for item information/requirements*/}
             <Dialog open={itemInfoOpen} onClose={handleItemInfoClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Item Info</DialogTitle>
                 <DialogContent>
@@ -472,13 +498,15 @@ function CreateBunker(props) {
                     </DialogContentText>
                 </DialogContent>
             </Dialog>
+
+            {/*Contains the dialog box for the item list*/}
             <Dialog open={itemListOpen} onClose={handleItemListClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Item List</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <div>
                         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} component="nav" aria-label="main item list">
                             {Object.entries(bunkerItems).map(([key, value]) => (
-                                <>
+                                <div key={key}>
                                     <Box sx={{ display: 'flex' }}>
                                         <ListItemText primary={value.name}></ListItemText>
                                         <ListItemButton onClick={handleItemListExpand}>
@@ -501,7 +529,7 @@ function CreateBunker(props) {
                                                 <DialogTitle id="form-dialog-title">Delete Item</DialogTitle>
                                                 <DialogContent>
                                                     <DialogContentText>
-                                                        <p>Are you sure you want to delete this item?</p>
+                                                        Are you sure you want to delete this item?
                                                     </DialogContentText>
                                                 </DialogContent>
                                                 <DialogActions>
@@ -511,17 +539,16 @@ function CreateBunker(props) {
                                             </Dialog>
                                         </List>
                                     </Collapse>
-                                </>
+                                </div>
                             ))}
                         </List>
-                    </DialogContentText>
+                    </div>
                 </DialogContent>
             </Dialog>
 
-
-
-
             {getBasicBunkerInfo()}
+
+            {/*Contains the input fields for creating a room*/}
             <h2>Rooms</h2>
             <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
                 <TextField required size="small" margin="dense" id="outlined-basic" label="Room Name" variant="outlined" value={newName} onChange={(e) => setNewName(e.target.value)} />
@@ -540,13 +567,15 @@ function CreateBunker(props) {
                         onChange={(e) => setItemRequired(e.target.value)}>
                         <MenuItem value={"None"}>None</MenuItem>
                         {Object.entries(bunkerItems).map(([key, value]) => (
-                            <MenuItem value={value.name}>{value.name}</MenuItem>
+                            <MenuItem key={key} value={value.name}>{value.name}</MenuItem>
 
                         ))}
                     </Select>
                 </FormControl>
                 <Button variant="contained" onClick={handleAddRoom}>Add Room</Button>
             </Box>
+
+            {/*Renders the rooms in a card format under room creation*/}
             {bunkerRooms.map((room, index) => (
                 <Card sx={{ minWidth: 275 }} key={index}>
                     <CardContent>
