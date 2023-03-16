@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import App from './App';
 import './App.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import { CardContent, CardActions, Typography, Dialog } from '@mui/material';
@@ -19,16 +19,17 @@ const BunkerManager = () => {
     const [isValid, setIsValid] = useState(null);
     const [state, dispatch] = useContext(Context);
     const [openWindow, setOpenWindow] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log("Loading bunkers from local storage")
         BunkerLoadFromLocal()
     }, []);
     function BunkerLoadFromLocal() {
-        for(let i=0; i<localStorage.length; i++) {
+        for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             console.log("Key: " + key)
-            if(key.startsWith("bunker-")) {
+            if (key.startsWith("bunker-")) {
                 const bunkerName = key.substring('bunker-'.length);
                 const dataString = localStorage.getItem(key);
                 const data = JSON.parse(dataString);
@@ -46,18 +47,26 @@ const BunkerManager = () => {
     };
 
     const validateFile = (file) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const fileData = JSON.parse(event.target.result);
-                console.log(fileData);
-                setIsValid(true);
-            } catch (error) {
-                setIsValid(false);
-            }
-        };
-        reader.readAsText(file);
-        console.log(JSON.stringify(file))
+        try {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const text = (e.target.result);
+                const data = JSON.parse(text);
+                if (data.name && data.rooms && data.description) {
+                    setIsValid(true);
+                    localStorage.setItem("bunker-" + data.name, text);
+                    dispatch({ type: "OPEN", severity: "success", message: "Bunker loaded           ", button: <Button sx={{color: 'text.disabled'}} onClick={() => { navigate("/manage/edit/" + data.name) }}>Edit</Button> });
+                    setBunkerList(bunkerList => bunkerList.concat(data))
+                } else {
+                    setIsValid(false);
+                }
+                
+            };
+            reader.readAsText(file);
+        }
+        catch (err) {
+            setIsValid(false);
+        }
     };
 
     const handleClose = () => {
@@ -68,7 +77,7 @@ const BunkerManager = () => {
         setOpenWindow(true)
     };
 
-    function handleRemoveBunker(index){
+    function handleRemoveBunker(index) {
         const newBunkers = [...bunkerList]
         localStorage.removeItem("bunker-" + bunkerList[index].name)
         newBunkers.splice(index, 1)
@@ -81,13 +90,12 @@ const BunkerManager = () => {
     const handleBunkerExport = (bunker) => {
         const fileName = bunker.name + "-bunker.json";
         const fileData = JSON.stringify(bunker);
-        const fileToSave = new Blob([fileData], {type: "application/json"});
+        const fileToSave = new Blob([fileData], { type: "application/json" });
         saveAs(fileToSave, fileName);
         dispatch({ type: "OPEN", severity: "success", message: "Bunker exported" });
     };
 
-
-    function BunkerCard (bunker, index) {
+    function BunkerCard(bunker, index) {
         return (
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
@@ -102,11 +110,11 @@ const BunkerManager = () => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" variant="outlined" onClick={() => {handleBunkerExport(bunker)}}>Export</Button>
-                    <Link to="/manage/edit">
-                        <Button size="small" variant="outlined" onClick={() => {setEdit(true)}}>Edit</Button>        
+                    <Button size="small" variant="outlined" onClick={() => { handleBunkerExport(bunker) }}>Export</Button>
+                    <Link to={`/manage/edit/${bunker.name}`}>
+                        <Button size="small" variant="outlined" onClick={() => { setEdit(true) }}>Edit</Button>
                     </Link>
-                    <Button size="small" variant="outlined" onClick={() => {handleBunkerDelete()}}>Delete</Button>
+                    <Button size="small" variant="outlined" onClick={() => { handleBunkerDelete() }}>Delete</Button>
                     <Dialog open={openWindow} onClose={handleClose} aria-labelledby="deleteBunker">
                         <DialogTitle id="deleteBunker">Are you sure?</DialogTitle>
                         <DialogContent>
@@ -114,7 +122,7 @@ const BunkerManager = () => {
                                 This will delete the bunker and all of its rooms.
                             </DialogContentText>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button onClick={() => {handleRemoveBunker(index)}}>Delete</Button>
+                            <Button onClick={() => { handleRemoveBunker(index) }}>Delete</Button>
                         </DialogContent>
                     </Dialog>
                 </CardActions>
@@ -140,9 +148,8 @@ const BunkerManager = () => {
                 <Button variant='contained'>
                     Back
                 </Button>
-            </Link>
-            
-            
+            </Link> 
+
             {bunkerList.map((bunker, index) => (
                 <div key={index}>
                     {BunkerCard(bunker, index)}

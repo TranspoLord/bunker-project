@@ -23,8 +23,9 @@ const SnackBarMessage = () => {
             open = {state.open}
             autoHideDuration = {6000}
             onClose = {handleClose}>
-                <Alert onClose={handleClose} severity={state.severity} sx={{ width: "100%" }}>
+                <Alert variant="filled" onClose={handleClose} severity={state.severity} sx={{ width: "100%" }}>
                     {state.message}
+                    {state.button ? state.button : null}
                 </Alert>
             </Snackbar>
         </div>

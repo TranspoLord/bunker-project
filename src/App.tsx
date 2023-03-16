@@ -18,7 +18,7 @@ function App() {
         <Route path={"/game"} element={<GameManager />} />
         <Route path={"/manage"} element={<BunkerManager />} />
         <Route path={"/manage/create"} element={<CreateBunker isCreatingBunker={true} />} />
-        <Route path={"/manage/edit"} element={<CreateBunker isCreatingBunker={false} />} />
+        <Route path={"/manage/edit/:name"} element={<CreateBunker isCreatingBunker={false} />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>

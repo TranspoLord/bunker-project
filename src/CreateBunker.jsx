@@ -1,6 +1,6 @@
 import { TextField, Box, Card, Button, CardContent, Typography, FormControl, DialogActions, ListItemText } from '@mui/material';
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { InputLabel, MenuItem, Select, FormControlLabel, Checkbox } from '@mui/material';
 import { Context } from './SnackBarStoreContext';
@@ -10,11 +10,13 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 function CreateBunker(props) {
     const [state, dispatch] = useContext(Context);
     const [bunkerInfoOpen, setBunkerInfoOpen] = useState(false);
+    const { name } = useParams();
+    const getBunker = JSON.parse(localStorage.getItem("bunker-" + name));
 
-    const [bunkerName, setNewBunkerName] = useState("");
-    const [bunkerDescription, setNewBunkerDescription] = useState("");
+    const [bunkerName, setNewBunkerName] = useState(getBunker ? getBunker.name : "");
+    const [bunkerDescription, setNewBunkerDescription] = useState(getBunker ? getBunker.description : "");
 
-    const [bunkerRooms, setRooms] = useState([]);
+    const [bunkerRooms, setRooms] = useState(getBunker ? getBunker.rooms : []);
     const [newName, setNewName] = useState("");
     const [newNorth, setNewNorth] = useState("");
     const [newSouth, setNewSouth] = useState("");
@@ -23,7 +25,7 @@ function CreateBunker(props) {
     const [newRoomDescription, setNewRoomDescription] = useState("");
     const [newRoomItem, setNewRoomItem] = useState("");
 
-    const [bunkerItems, setItems] = useState([]);
+    const [bunkerItems, setItems] = useState(getBunker ? getBunker.items : []);
     const [itemInfoOpen, setItemInfoDialogOpen] = useState(false);
     const [itemCreationOpen, setOpenWindow] = useState(false);
     const [itemName, setItemName] = useState("");
@@ -330,7 +332,7 @@ function CreateBunker(props) {
 
     return (
         <div>
-            <h1>Create Bunker</h1>
+            <h1>{getBunker ? "Edit Bunker" : "Create Bunker"}</h1>
             <Link to="/manage"><Button variant="contained">Back</Button></Link>
             <Button variant="contained" onClick={handleBunkerSave}>Save Bunker</Button>
             <Button variant="contained" onClick={handleItemOpen}>Create Item</Button>
@@ -568,7 +570,6 @@ function CreateBunker(props) {
                         <MenuItem value={"None"}>None</MenuItem>
                         {Object.entries(bunkerItems).map(([key, value]) => (
                             <MenuItem key={key} value={value.name}>{value.name}</MenuItem>
-
                         ))}
                     </Select>
                 </FormControl>
