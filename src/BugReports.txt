@@ -1,0 +1,16 @@
+Bugs that need fixing:
+1. Description for rooms and bunker need to be larger. Maybe a dialog box? 
+2. If an item is deleted, it should be deleted from the rooms that contain it.
+3. Item List: If one item is expanded, the others do as well. 
+4. Create Item: Values from previous item creation are not cleared.
+5. Create Item: If you create an item with a name that already exists, it will create a new item with the same name.
+6. Create Room: If you create a room with a name that already exists, it will create a new room with the same name.
+7. Create Item: Reorder the fields of the form to be more logical.
+8. Item List: Need an edit button.
+
+QOL changes:
+1. Item List needs a search function.
+2. Item List needs a sort function.
+3. Item List needs a filter function.
+4. Create Item: Default Pickups include name of the item.
+

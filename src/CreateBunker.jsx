@@ -23,7 +23,7 @@ function CreateBunker(props) {
     const [newEast, setNewEast] = useState("");
     const [newWest, setNewWest] = useState("");
     const [newRoomDescription, setNewRoomDescription] = useState("");
-    const [newRoomItem, setNewRoomItem] = useState("");
+    const [newRoomItem, setNewRoomItem] = useState("None");
 
     const [bunkerItems, setItems] = useState(getBunker ? getBunker.items : []);
     const [itemInfoOpen, setItemInfoDialogOpen] = useState(false);
@@ -566,7 +566,7 @@ function CreateBunker(props) {
                         id="select"
                         value={newRoomItem}
                         label="Room Item"
-                        onChange={(e) => setItemRequired(e.target.value)}>
+                        onChange={(e) => setNewRoomItem(e.target.value)}>
                         <MenuItem value={"None"}>None</MenuItem>
                         {Object.entries(bunkerItems).map(([key, value]) => (
                             <MenuItem key={key} value={value.name}>{value.name}</MenuItem>
