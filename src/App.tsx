@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import GameManager from "./GameManager"
 import BunkerManager from "./BunkerManager"
+import GameSettings from "./GameSettings"
 import Home from "./Home"
 import PageNotFound from './PageNotFound';
 import { Routes, Route } from "react-router";
@@ -15,7 +16,8 @@ function App() {
       <SnackBarMessage />
       <Routes>
         <Route path={"/"} element={<Home />} />
-        <Route path={"/game"} element={<GameManager />} />
+        <Route path={"/game"} element={<GameSettings />} />
+        <Route path={"/game/:name"} element={<GameManager />} />
         <Route path={"/manage"} element={<BunkerManager />} />
         <Route path={"/manage/create"} element={<CreateBunker isCreatingBunker={true} />} />
         <Route path={"/manage/edit/:name"} element={<CreateBunker isCreatingBunker={false} />} />

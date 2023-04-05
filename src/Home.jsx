@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function Home() {
 
   return (
     <div>
       <Link to="/game">
-        <button className="startButton">
-          Start Game
-        </button>
+        <Button variant='contained'>Enter Game</Button>
       </Link>
 
       <Link to="/manage">
-        <button className="manageButton">
-          Manage Bunkers
-        </button>
+        <Button variant='contained'>Manage Bunkers</Button>
       </Link>
     </div>
   )
