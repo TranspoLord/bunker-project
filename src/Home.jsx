@@ -6,7 +6,7 @@ function Home() {
 
   return (
     <div>
-      <Link to="/game">
+      <Link to="/bunkerChoice">
         <Button variant='contained'>Enter Game</Button>
       </Link>
 

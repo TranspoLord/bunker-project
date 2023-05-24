@@ -4,6 +4,7 @@ import { Button, Card } from "@mui/material";
 import { CardContent } from "@mui/material";
 import { CardActions } from "@mui/material";
 import { Typography } from "@mui/material";
+import GameSettings from "./GameSettings";
 
 
 const BunkerChoice = () => {
@@ -14,6 +15,7 @@ const BunkerChoice = () => {
         console.log("Loading bunkers from local storage")
         BunkerLoadFromLocal()
     }, []);
+
     function BunkerLoadFromLocal() {
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -26,10 +28,6 @@ const BunkerChoice = () => {
             }
         }
         console.log("Bunker list: " + bunkerList)
-    }
-
-    function handleChoice(bunker) {
-        console.log("Bunker chosen: " + bunker.name)
     }
 
     function BunkerCard(bunker, index) {
@@ -47,25 +45,27 @@ const BunkerChoice = () => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" variant="outlined" onClick={() => { handleChoice(bunker) }}>Choose</Button>
+                    <Link to={`/gameSettings/${bunker.name}`}>
+                        <Button size="small" variant="outlined">Choose</Button>
+                    </Link>
                 </CardActions>
             </Card>
         );
     }
 
 
-    return (
-        <div>
-            <Link to="/game">
-                <Button variant='contained'>Back</Button>
-            </Link>
-            {bunkerList.map((bunker, index) => (
-                <div key={index}>
-                    {BunkerCard(bunker, index)}
-                </div>
-            ))}
-        </div>
-    );
+return (
+    <div>
+        <Link to="/game">
+            <Button variant='contained'>Back</Button>
+        </Link>
+        {bunkerList.map((bunker, index) => (
+            <div key={index}>
+                {BunkerCard(bunker, index)}
+            </div>
+        ))}
+    </div>
+);
 
 }
 export default BunkerChoice;

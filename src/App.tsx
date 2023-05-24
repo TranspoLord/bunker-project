@@ -19,7 +19,8 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path={"/game"} element={<GameSettings />} />
         <Route path={"/game/:name"} element={<GameManager />} />
-        <Route path={"/game/bunkerchoice"} element={<BunkerChoice />} />
+        <Route path={"/bunkerchoice"} element={<BunkerChoice />} />
+        <Route path={"/gameSettings/:name"} element={<GameSettings />} />
         <Route path={"/manage"} element={<BunkerManager />} />
         <Route path={"/manage/create"} element={<CreateBunker isCreatingBunker={true} />} />
         <Route path={"/manage/edit/:name"} element={<CreateBunker isCreatingBunker={false} />} />
