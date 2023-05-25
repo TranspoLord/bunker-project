@@ -13,3 +13,14 @@ QOL changes:
 2. Item List needs a sort function.
 3. Item List needs a filter function.
 4. Create Item: Default Pickups include name of the item.
+
+Needed Changes:
+1. Add a test bunker to the database???
+2. Add a button to bunker manager to add a test bunker???
+3. Bug Reports: Add a way to send bug reports to me.
+4. Bug Reports: Add a way to send feature requests/suggestions to me.
+
+Maybe Changes:
+1. Add a way for random test rooms to be added when creating a bunker
+2. Add a way for random test items to be added when creating a bunker
+3. Random generation of bunkers? Maybe using GPT?
