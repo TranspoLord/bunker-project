@@ -1,0 +1,26 @@
+Bugs that need fixing:
+1. Description for rooms and bunker need to be larger. Maybe a dialog box? 
+2. If an item is deleted, it should be deleted from the rooms that contain it.
+3. Item List: If one item is expanded, the others do as well. 
+4. Create Item: Values from previous item creation are not cleared.
+5. Create Item: If you create an item with a name that already exists, it will create a new item with the same name.
+6. Create Room: If you create a room with a name that already exists, it will create a new room with the same name.
+7. Item List: Need an edit button.
+8. SnackBar: SnackBar sends a success message after original message is closed.
+
+QOL changes:
+1. Item List needs a search function.
+2. Item List needs a sort function.
+3. Item List needs a filter function.
+4. Create Item: Default Pickups include name of the item.
+
+Needed Changes:
+1. Add a test bunker to the database???
+2. Add a button to bunker manager to add a test bunker???
+3. Bug Reports: Add a way to send bug reports to me.
+4. Bug Reports: Add a way to send feature requests/suggestions to me.
+
+Maybe Changes:
+1. Add a way for random test rooms to be added when creating a bunker
+2. Add a way for random test items to be added when creating a bunker
+3. Random generation of bunkers? Maybe using GPT?
