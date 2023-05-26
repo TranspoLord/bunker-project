@@ -56,7 +56,7 @@ const BunkerChoice = () => {
 
 return (
     <div>
-        <Link to="/game">
+        <Link to="/">
             <Button variant='contained'>Back</Button>
         </Link>
         {bunkerList.map((bunker, index) => (

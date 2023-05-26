@@ -1,7 +1,7 @@
 
 import React, {useState, useEffect } from 'react';
-import './App.css';
-import data from './Test.json'
+import '../App.css';
+import data from '../TextFiles/Test.json';
 
 const GameManager = () => {
   const [roomName, setRoomName] = useState("Entrance")

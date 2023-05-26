@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import App from '../App';
-import './App.css';
+import '../App.css';
 import { Link, useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import { CardContent, CardActions, Typography, Dialog } from '@mui/material';
-import { Context } from '../Mains/SnackBarStoreContext';
+import { Context } from '../SnackBar/SnackBarStoreContext';
 import { DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { saveAs } from 'file-saver';
+import TestBunker from '../TextFiles/Abandoned Test Bunker.json';
 
 
 const BunkerManager = () => {
@@ -55,12 +56,12 @@ const BunkerManager = () => {
                 if (data.name && data.rooms && data.description) {
                     setIsValid(true);
                     localStorage.setItem("bunker-" + data.name, text);
-                    dispatch({ type: "OPEN", severity: "success", message: "Bunker loaded           ", button: <Button sx={{color: 'text.disabled'}} onClick={() => { navigate("/manage/edit/" + data.name) }}>Edit</Button> });
+                    dispatch({ type: "OPEN", severity: "success", message: "Bunker loaded           ", button: <Button sx={{ color: 'text.disabled' }} onClick={() => { navigate("/manage/edit/" + data.name) }}>Edit</Button> });
                     setBunkerList(bunkerList => bunkerList.concat(data))
                 } else {
                     setIsValid(false);
                 }
-                
+
             };
             reader.readAsText(file);
         }
@@ -93,6 +94,15 @@ const BunkerManager = () => {
         const fileToSave = new Blob([fileData], { type: "application/json" });
         saveAs(fileToSave, fileName);
         dispatch({ type: "OPEN", severity: "success", message: "Bunker exported" });
+    };
+
+    const handleTestBunkerLoad = () => {
+        console.log(TestBunker)
+        const text = JSON.stringify(TestBunker);
+        const data = JSON.parse(text);
+        localStorage.setItem("bunker-" + data.name, text);
+        dispatch({ type: "OPEN", severity: "success", message: "Test Bunker Loaded"});
+        setBunkerList(bunkerList => bunkerList.concat(data))
     };
 
     function BunkerCard(bunker, index) {
@@ -144,11 +154,14 @@ const BunkerManager = () => {
                     Create Bunker
                 </Button>
             </Link>
+            <Button variant="contained" onClick={() => { handleTestBunkerLoad() }}>
+                Load Test Bunker
+            </Button>
             <Link to="/">
                 <Button variant='contained'>
                     Back
                 </Button>
-            </Link> 
+            </Link>
 
             {bunkerList.map((bunker, index) => (
                 <div key={index}>

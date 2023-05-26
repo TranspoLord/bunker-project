@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from '@mui/material';
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
-import { Context } from './SnackBarStoreContext';
+import { Context } from '../SnackBar/SnackBarStoreContext';
 import { useParams, Link } from 'react-router-dom';
 
 
