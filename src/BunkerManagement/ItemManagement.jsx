@@ -32,6 +32,9 @@ function ItemManagement({ bunkerItems, setItems }) {
             dispatch({ type: "OPEN", severity: "error", message: "Item name and description cannot be empty" });
             return;
         }
+        if (itemIncludeNameInPickups){
+            itemPickups.push(itemName);
+        }
         const newItem = {
             name: itemName,
             description: itemDescription,
