@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import '../App.css';
-import Player from './Classes/Player';
-import Room from './Classes/Room';
-import Item from './Classes/Item';
-import Bunker from './Classes/Bunker';
+import Player from '../Classes/Player';
+import Room from '../Classes/Room';
+import Item from '../Classes/Item';
+import Bunker from '../Classes/Bunker';
 import { Build } from '@mui/icons-material';
 import { loadBunker } from "../Helper/BuildBunker"
 

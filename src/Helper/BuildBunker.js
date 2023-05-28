@@ -1,6 +1,6 @@
-import Bunker from '../Bunker/Bunker.js';
-import Room from '../Bunker/Room.js';
-import Item from '../Bunker/Item.js';
+import Bunker from '../Classes/Bunker.js';
+import Room from '../Classes/Room.js';
+import Item from '../Classes/Item.js';
 
 export function loadBunker(data) {
     let bunker = new Bunker();
