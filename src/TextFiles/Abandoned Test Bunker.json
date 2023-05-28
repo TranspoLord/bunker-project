@@ -44,7 +44,8 @@
             "descAlreadyHave": "You already have the most useful weapon from this room. Everything else either doesn't or just won't fit.",
             "descItemNeeded": "",
             "descItemPickup": "You picked up the plasma gun. It was a little difficult to lift but it fit snuggly onto your walker's arm.",
-            "baconItem": true
+            "baconItem": true,
+            "finalRoom": true
         }
     ],
     "rooms": [
@@ -55,7 +56,8 @@
             "east": "Hallway",
             "west": "",
             "description": "You are in the entrance of the bunker. It has a small desk and a check in area. Although, you feel like that is no longer needed. To the east is a hallway that goes deeper into the dark bunker. You can tell several rooms connect to it. To the south is a room with what looks like a bunch of old wires and circuit breakers.",
-            "item": "None"
+            "item": "None",
+            "finalRoom": false
         },
         {
             "name": "Hallway",
@@ -64,7 +66,8 @@
             "east": "Food Storage",
             "west": "Entrance",
             "description": "Moving into the hallway, you can see four separate directions you can take. To the north looks like another hallway except smaller and with some shelves and boxes. To the east looks like a room with a bunch of food. You can smell the old grease coming from it. To the south is a large hall which looks like it used to serve as a common area for the bunker, but now, there is a sign that says stay out. You hear thunderous bombs in the room. To the west is the entrance where you came into the bunker.",
-            "item": "Computer Battery"
+            "item": "Computer Battery",
+            "finalRoom": false
         },
         {
             "name": "Side Storage",
@@ -73,7 +76,8 @@
             "east": "Weapon Room",
             "west": "Armor Room",
             "description": "Entering the storage area, you find it's full of shelves, boxes, and other small equipment. To the east is a barricaded door that is slightly ajar. The label says \"Weapon Room\". To the south is the hallway that you used to get to this side of the bunker. To the west is another door that looks similar to the weapon\"s door, except this one says \"Armor Room.\"",
-            "item": "Dead Energy Core"
+            "item": "Dead Energy Core",
+            "finalRoom": false
         },
         {
             "name": "Weapon Room",
@@ -82,7 +86,8 @@
             "east": "",
             "west": "Side Storage",
             "description": "Walking into the room, you find a ton of different guns and weapons. Ranging from kenetic, like bullet weapons, rocket launchers, and energy weapons.  To the west is the door you came through from the storage hallway.",
-            "item": "Walker Plasma Gun"
+            "item": "Walker Plasma Gun",
+            "finalRoom": false
         },
         {
             "name": "Armor Room",
@@ -91,7 +96,8 @@
             "east": "Side Storage",
             "west": "",
             "description": "Entering the room, you see a ton of different armor pieces, plates, and some mechanical armor pieces. Some of these pieces look very similar to the ones on your walker. Towards the east is the door you came through, leading to the storage area.",
-            "item": "Walker Chest Armor"
+            "item": "Walker Chest Armor",
+            "finalRoom": false
         }
     ]
 }

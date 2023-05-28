@@ -24,6 +24,7 @@ function CreateBunker(props) {
     const [newWest, setNewWest] = useState("");
     const [newRoomDescription, setNewRoomDescription] = useState("");
     const [newRoomItem, setNewRoomItem] = useState("None");
+    const [newRoomFinalRoom, setNewRoomFinalRoom] = useState(false);
 
     const [bunkerItems, setItems] = useState(getBunker ? getBunker.items : []);
 
@@ -48,7 +49,8 @@ function CreateBunker(props) {
             east: newEast,
             west: newWest,
             description: newRoomDescription,
-            item: newRoomItem
+            item: newRoomItem,
+            finalRoom: newRoomFinalRoom
         };
 
         setRooms([...bunkerRooms, newRoom]);
@@ -59,6 +61,7 @@ function CreateBunker(props) {
         setNewWest("");
         setNewRoomDescription("");
         setNewRoomItem("");
+        setNewRoomFinalRoom(false);
     }
 
     //Deletes a room from the bunkerRooms array
@@ -122,6 +125,7 @@ function CreateBunker(props) {
             setNewWest(newRoom.west);
             setNewRoomDescription(newRoom.description);
             setNewRoomItem(newRoom.item);
+            setNewRoomFinalRoom(newRoom.finalRoom);
             handleRemoveRoom(index);
         }
     }
@@ -178,6 +182,7 @@ function CreateBunker(props) {
                 <TextField size="small" margin="dense" id="outlined-basic" label="South Room" variant="outlined" value={newSouth} onChange={(e) => setNewSouth(e.target.value)} />
                 <TextField size="small" margin="dense" id="outlined-basic" label="East Room" variant="outlined" value={newEast} onChange={(e) => setNewEast(e.target.value)} />
                 <TextField size="small" margin="dense" id="outlined-basic" label="West Room" variant="outlined" value={newWest} onChange={(e) => setNewWest(e.target.value)} />
+                <FormControlLabel control={<Checkbox checked={newRoomFinalRoom} onChange={(e) => setNewRoomFinalRoom(e.target.checked)} />} label="Final Room" />
                 <FormControl>
                     <InputLabel id="RoomItemLabel">Item</InputLabel>
                     <Select

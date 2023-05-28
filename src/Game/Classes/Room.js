@@ -1,11 +1,47 @@
 export default class Room {
-    constructor(name, description, north, south, east, west, item) {
+    name
+    description
+    north
+    northName
+    south
+    southName
+    east
+    eastName
+    west
+    westName
+
+    item
+
+    /**
+     * @param name Name of room
+     * @param description Description of room
+     */
+    constructor(name, description) {
         this.name = name;
         this.description = description;
-        this.north = north;
-        this.south = south;; 
-        this.east = east;
-        this.west = west;
-        this.item = item;
     }
+
+    setItem(item) {
+        this.item = item
+    }
+
+    setEastRoom(room) {
+        this.east = room
+    }
+    setWestRoom(room) {
+        this.west = room
+    }
+    setNorthRoom(room) {
+        this.north = room
+    }
+    setSouthRoom(room) {
+        this.south = room
+    }
+
+
+
+    getName() {
+        return this.name
+    }
+
 }
