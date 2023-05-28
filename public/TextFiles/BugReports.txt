@@ -6,7 +6,8 @@ Bugs that need fixing:
 5. Create Item: If you create an item with a name that already exists, it will create a new item with the same name.
 6. Create Room: If you create a room with a name that already exists, it will create a new room with the same name.
 7. Item List: Need an edit button.
-8. SnackBar: SnackBar sends a success message after original message is closed.
+8. Create Item: If player enters letters in pickups, unchecks default pickups, then deletes the letters, defaults wont be added 
+9. SnackBar: SnackBar sends a success message after original message is closed.
 
 QOL changes:
 1. Item List needs a search function.

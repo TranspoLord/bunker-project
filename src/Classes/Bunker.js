@@ -38,4 +38,41 @@ export default class Bunker {
         return this.rooms.find(room => room.getName() === roomName)
     }
 
+
+    spawnPlayer() {
+        this.player.room = this.findRoom("Entrance");
+    }
+
+    north () {
+        if (this.player.room.north) {
+            this.player.room = this.player.room.north;
+            return true;
+        }
+        return false;
+    }
+
+    east() {
+        if (this.player.room.east) {
+            this.player.room = this.player.room.east;
+            return true;
+        }
+        return false;
+    }
+
+    south() {
+        if (this.player.room.south) {
+            this.player.room = this.player.room.south;
+            return true;
+        }
+        return false;
+    }
+
+    west() {
+        if (this.player.room.west) {
+            this.player.room = this.player.room.west;
+            return true;
+        }
+        return false;
+    }
+
 }

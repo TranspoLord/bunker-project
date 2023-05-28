@@ -10,6 +10,7 @@ export default class Room {
     west
     westName
 
+    removedItem
     item
 
     /**
@@ -42,6 +43,19 @@ export default class Room {
 
     getName() {
         return this.name
+    }
+
+    getItem() {
+        return this.item
+    }
+    
+    getRemovedItem() {
+        return this.removedItem
+    }
+
+    removeItem() {
+        this.removedItem = this.item;
+        this.item = null
     }
 
 }

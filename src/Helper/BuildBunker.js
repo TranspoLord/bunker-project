@@ -6,7 +6,7 @@ export function loadBunker(data) {
     let bunker = new Bunker();
     data.rooms.forEach(roomData => {
       const room = loadRoom(roomData, data.items)
-      bunker.rooms.add(room)
+      bunker.addRoom(room)
     });
     bunker.completeLoad()
     return bunker
@@ -23,7 +23,7 @@ function loadRoom(roomData, itemsData) {
     room.southName = roomData.south;
     room.eastName = roomData.east;
     room.westName = roomData.west;
-    loadItem(roomData.item, itemsData);
+    room.item = loadItem(roomData.item, itemsData);
     return room;
 }
 
@@ -45,7 +45,7 @@ function loadItem(itemName, itemsData) {
   item.name = itemData.name;
   item.description = itemData.description;
   item.requiredItem = itemData.requiredItem;
-  item.pickups = itemData.pickups;
+  item.pickups = itemData.pickups.split(", ");
   item.descAlreadyHave = itemData.descAlreadyHave;
   item.descItemNeeded = itemData.descItemNeeded;
   item.descItemPickup = itemData.descItemPickup;
