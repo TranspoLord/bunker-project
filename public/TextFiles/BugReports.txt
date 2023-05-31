@@ -8,12 +8,14 @@ Bugs that need fixing:
 7. Item List: Need an edit button.
 8. Create Item: If player enters letters in pickups, unchecks default pickups, then deletes the letters, defaults wont be added 
 9. SnackBar: SnackBar sends a success message after original message is closed.
+10. Create Bunker: If player saves bunker with at least 2 rooms, it still says "You must have at least 2 rooms"
 
 QOL changes:
 1. Item List needs a search function.
 2. Item List needs a sort function.
 3. Item List needs a filter function.
 4. Create Item: Default Pickups include name of the item.
+5. Item Info needs a way to leave other than clicking off of it.
 
 Needed Changes:
 1. Add a test bunker to the database???
