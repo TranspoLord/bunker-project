@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import TrelloList from './TrelloList';
 
 
 
@@ -21,6 +22,11 @@ function ReportingHome() {
         fetchFileContents();
     }, []);
 
+    const handleClickTrelloBoard = () => {
+        window.open('https://trello.com/b/Ox5fOGv2/bunkerproject');
+    }
+
+
     return (
         <>
             <div>
@@ -40,6 +46,7 @@ function ReportingHome() {
 
             <div>
                 <h2>Todo List</h2>
+                <Button variant='contained' onClick={() => handleClickTrelloBoard()}>Trello Board</Button>
                 <p>{fileContents}</p>
             </div>
         </>

@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import CommitHistory from './CommitHistory';
 
 function DevLog() {
+
+  const handleClickGithubRepo = () => {
+    window.open('https://github.com/TranspoLord/bunker-project');
+  }
 
   return (
     <>
@@ -12,9 +17,12 @@ function DevLog() {
         </Link>
       </div>
       <div>
+        <h1>Development History</h1>
+        </div>
+      <div>
+        <Button variant='contained' onClick={() => handleClickGithubRepo()}>GitHub Repo</Button>
         <h2>Dev Log</h2>
-        <p>Plan for this is to get commit history from GitHub and put it here as a log</p>
-        <p>May be a short while before this is implemented, but it will give an easier log histroy for this game</p>
+        <CommitHistory />
       </div>
     </>
   )
