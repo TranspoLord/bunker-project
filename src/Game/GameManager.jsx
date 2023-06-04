@@ -3,12 +3,15 @@ import { Link, useParams } from 'react-router-dom';
 import '../App.css';
 import Player from '../Classes/Player';
 import { loadBunker } from "../Helper/BuildBunker"
+import InventoryRender from './InventoryRender';
 
 const GameManager = () => {
   const { name } = useParams();
   const [bunker, setBunker] = useState(null);
   const [update, setUpdate] = useState(0);
   const roomInput = useRef();
+
+  const [displayActionMsg, setDisplayActionMsg] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,10 +20,14 @@ const GameManager = () => {
     const room = bunker.player.getRoom();
     const item = room.getItem()
 
+    //Move pickups to InventoryRender.jsx
+
     const pickups = item?.pickups?.reduce((prev, curr) => {
       prev[curr.toLowerCase()] = () => {
         const successful = bunker.player.pickupItem(item);
         if (successful) {
+          setDisplayActionMsg(true);
+          setUpdate(update + 1);
           room.removeItem()
         }
         return successful;
@@ -35,7 +42,7 @@ const GameManager = () => {
       }
       return prev;
     }, {});
-    
+
     const commands = {
       north: () => bunker.north(),
       east: () => bunker.east(),
@@ -44,7 +51,7 @@ const GameManager = () => {
       ...pickups,
       ...alreadyHaves,
     };
-    
+
     if (commands[text]) {
       const result = commands[text]();
       if (result) {
@@ -56,7 +63,7 @@ const GameManager = () => {
     roomInput.current.value = '';
     setUpdate(update + 1)
   }
- 
+
   useEffect(() => {
     console.log("GameManager initial run");
     const JSONbunker = JSON.parse(localStorage.getItem("bunker-" + name));
@@ -74,32 +81,17 @@ const GameManager = () => {
 
   return (
     <div>
-      
+
       <h2>{bunker.player.room.name}</h2>
       <div>{bunker.player.room.description}</div>
       <div>{bunker.player.room.item?.description}</div>
       <div>*********</div>
-      <h4>Inventory</h4>
-      
-      {
-        bunker.player.inventory.map(item => 
-          <div
-          key={item.name}>
-            <h5>{item.name}</h5>
-          </div>
-          )
-      }
-
-      <div>*********</div>
-      <div>
-        actions that you do in the room
-      </div>
-      <div>*********</div>
+      <InventoryRender IRBunker = {bunker} IRDisplayActionMsg = {displayActionMsg} update = {update}/>
       <h3>What do you do?</h3>
       <form onSubmit={handleSubmit}>
-        <input type="text" ref={roomInput}/>
+        <input type="text" ref={roomInput} />
       </form>
-      
+
     </div>
   );
 };
