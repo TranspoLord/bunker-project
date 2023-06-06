@@ -8,7 +8,7 @@ import { CardContent, CardActions, Typography, Dialog } from '@mui/material';
 import { Context } from '../SnackBar/SnackBarStoreContext';
 import { DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { saveAs } from 'file-saver';
-import TestBunker from '../TextFiles/Abandoned Test Bunker.json';
+import TestBunker from '../TextFiles/Abandoned Test Bunker Full.json';
 
 
 const BunkerManager = () => {

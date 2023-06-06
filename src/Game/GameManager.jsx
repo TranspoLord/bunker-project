@@ -72,7 +72,9 @@ const GameManager = () => {
         setMessages([]);
       },
       inventory: () => {
-        setMessages(prev => [...prev, bunker.player.getInventory()])
+        setMessages(prev => [...prev, 
+          'Inventory: ' +
+          bunker.player.getInventory().map(i => i.name).join(', ')])
       },
       ...pickups,
       ...alreadyHaves,
@@ -113,7 +115,7 @@ const GameManager = () => {
       <h2>{bunker.player.room.name}</h2>
       <div>{bunker.player.room.description}</div>
       <div>{bunker.player.room.item?.description}</div>
-      <div>*********</div>
+      {messages != "" ? '*********' : ''}
       {messages.map((m, index) => <div key={index}>{m}</div>)}
       <div>*********</div>
       <h3>What do you do?</h3>

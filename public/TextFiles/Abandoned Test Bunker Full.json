@@ -1,0 +1,218 @@
+{
+    "name": "Abandoned Test Bunker",
+    "description": "This is a bunker that used to house an experimental lab. They seemed to test advanced cybernetics, but it's abandoned now. No telling what's inside. ",
+    "items": [
+        {
+            "name": "Computer Battery",
+            "description": "Looking around, you see what looks like a small car battery on the ground. It\\\"s too small for a car, though. But, it should have enough juice to power a small machine or computer for a short time.",
+            "required": "",
+            "pickups": "Pickup Computer Battery, Computer Battery, Battery",
+            "defaultPickups": true,
+            "descAlreadyHave": "There's nothing else of use here, besides the battery you've already picked up.",
+            "descItemNeeded": "",
+            "descItemPickup": "You've picked up the small battery!",
+            "baconItem": true
+        },
+        {
+            "name": "Dead Energy Core",
+            "description": "Rummaging around the old boxes and shelves, you find a cylindrical battery of some sort. It seems to replicate an energy core for your mechanical walker. It is dead though. Maybe there is a place to charge is somewhere in this bunker?",
+            "required": "",
+            "pickups": "Pickup Energy Core, Pickup Dead Energy Core, Pickup Core, Dead Energy Core, Core, Energy Core",
+            "defaultPickups": true,
+            "descAlreadyHave": "You've already picked up the dead energy core from here.",
+            "descItemNeeded": "",
+            "descItemPickup": "You've picked up the dead energy core! Now to find a place to charge it.",
+            "baconItem": false
+        },
+        {
+            "name": "Walker Chest Armor",
+            "description": "Looking across all the armor plates and heavy metals, you find something that can can fit onto your walker's chest area!",
+            "required": "",
+            "pickups": "Pickup Walker Chest Armor, Pickup Armor, Pickup Chest Armor, Pickup Walker Chest, Walker Chest Armor",
+            "defaultPickups": true,
+            "descAlreadyHave": "There's no other armor that can be fitted to your walker! Everything else is too heavy.",
+            "descItemNeeded": "",
+            "descItemPickup": "You picked up the walker chest armor. It's a little heavy, but with a shove here and a push there, you get it up onto your walker. It fits pretty well and looks sturdy! You've fit it better when you get back home.",
+            "baconItem": true
+        },
+        {
+            "name": "Walker Plasma Gun",
+            "description": "Amongst the weapons and guns, you find a plasma gun that should fit just right with your walker. Although, it seems to need ammo cartridges. ",
+            "required": "",
+            "pickups": "Pickup Plasma Gun, Pickup Walker Plasma Gun, Pickup Gun",
+            "defaultPickups": true,
+            "descAlreadyHave": "You already have the most useful weapon from this room. Everything else either doesn't or just won't fit.",
+            "descItemNeeded": "",
+            "descItemPickup": "You picked up the plasma gun. It was a little difficult to lift but it fit snuggly onto your walker's arm.",
+            "baconItem": true
+        },
+        {
+            "name": "Bacon and Beans",
+            "description": "Rummaging around the shelves of food, you find some bacon and beans. This should suffice in keeping your energy up...plus it has bacon!",
+            "required": "",
+            "pickups": "Bacon and Beans, Pickup Bacon and Beans, Pickup Bacon, Pickup Beans, Pickup Food",
+            "defaultPickups": true,
+            "descAlreadyHave": "You found the bacon and beans already. There's not much else here.",
+            "descItemNeeded": "",
+            "descItemPickup": "You pick up and eat the beans and bacon. It's not the best, but it's better than nothing. It fills you with energy and you feel ready to take on the world...or the bathroom.",
+            "baconItem": true
+        },
+        {
+            "name": "Charged Energy Code",
+            "description": "You find what looks like a charging station for a large, cylindrical battery. It is still connected to the power and should be able to charge a battery",
+            "required": "Dead Energy Core",
+            "pickups": "Charge Energy Core, Charge, Pickup, Charge Dead Core, Charge Dead Energy Core",
+            "defaultPickups": true,
+            "descAlreadyHave": "Your energy core is already charged.",
+            "descItemNeeded": "Charge what? You need an energy core to charge. Maybe you can find one around the bunker?",
+            "descItemPickup": "You put the energy core into the charging station. In no time, it fills the battery and you slide it into your walker, hearing the telltale sign of electrical humming",
+            "baconItem": true
+        },
+        {
+            "name": "Shield Projector",
+            "description": "Sorting through all the machinery and random technology, you find a shield projection unit for your walker. Although, it does need a fully charged walker to be attached.",
+            "required": "Charged Energy Core",
+            "pickups": "Pickup Shield, Pickup Shield Generator, Pickup Generator, Pickup Shield Projector, Pickup Projector",
+            "defaultPickups": true,
+            "descAlreadyHave": "You've already picked up the shield projector. Everything else is broken or unusable.",
+            "descItemNeeded": "You can't pickup the projector yet. Your walker needs to be fully charged first to handle it.",
+            "descItemPickup": "With great difficulty, you pickup the shield projector and fit it onto your walker's free arm. It's a little heavy, but it should work quite well.",
+            "baconItem": true
+        },
+        {
+            "name": "Plasma Gun Ammo",
+            "description": "Rummaging around the hallway, you find some energy cartridges. Maybe they could be used for a type of energy gun?",
+            "required": "",
+            "pickups": "Pickup Plasma Gun Ammo, Pickup Ammo, Pickup Cartridges, Pickup Energy Cartridges, Pickup Energy Ammo",
+            "defaultPickups": true,
+            "descAlreadyHave": "You've already picked up the ammo. There's nothing else here.",
+            "descItemNeeded": "",
+            "descItemPickup": "You've picked up the plasma cartridges. They should work well if you can find something to use them.",
+            "baconItem": true
+        },
+        {
+            "name": "Digital Files",
+            "description": "You find a working computer while looking through the area. Although, it does seem to need a power source in order for it to work.",
+            "required": "Computer Battery",
+            "pickups": "Pickup Digital Files, Read Files, Pickup Files, Pickup Computer Files, Pickup Computer, Place Battery, Place Computer Battery, Place Battery in Computer",
+            "defaultPickups": true,
+            "descAlreadyHave": "You've seen the files on the computer already. There's nothing else to be found on the computer.",
+            "descItemNeeded": "You try to turn on the computer. It doesn't turn on, however, it doesn't look damaged. Maybe it just needs some power?",
+            "descItemPickup": "You insert the battery into the back of the computer. Reading into them, you can tell what is causing those loud booms in the large room. It seems an experiment went wrong with a mechanical walker. Who ever was here was trying to infuse organic material with the mechanics of the walker. They were succesfull in this endevour, all the way to the last minute, where they were infusing a human body and BRAIN with the walker. The walker went rouge and started to kill everything and everyone in the bunker. They tried to shut it down but it was too powerful. The workers abandoned this area, leaving the rogue cyborg locked away...until you stumbled upon it. Looking through more files, you find ways to kill the walker, but it won\"t be easy. Better gather as much loot from the bunker as you can before taking on this beast.",
+            "baconItem": true
+        },
+        {
+            "name": "Rouge Walker",
+            "description": "",
+            "required": "Walker Chest Armor, Walker Plasma Gun, Shield Projector, Plasma Gun Ammo, Digital Files, Charged Energy Core, Bacon and Beans",
+            "pickups": "Fight",
+            "defaultPickups": true,
+            "descAlreadyHave": "",
+            "descItemNeeded": "You're too slow to miss the first strike of the beast. Even your walker is too weak to deal with the beast. The ending is something you don't want to see. YOU LOST.",
+            "descItemPickup": "With quick actions that even surpise you, you jump up, the energy core giving you powerful legs, missing the beast's first strike. Pulling out the plasma gun, you aim your walker towards the weak spot, unloading several rounds. A loud mechanical sounding yowl comes from the rouge walker. It swings back around and hits you. With quick thinking, you raise your new found shield and block the hit. Counter attacking you drive your walkers free arm straight into the chest of the beast, grabbing hold of the intermingled computer and beating heart. Pulling back, you pull it out, causing the rouge walker to scream in agony. It falls to the ground and you can hear, with it\"s last breathe, \"Thank you.\" before it dies in front of you. You have defeated the beast! YOU WIN!",
+            "baconItem": false
+        }
+    ],
+    "rooms": [
+        {
+            "name": "Entrance",
+            "north": "",
+            "south": "Power Room",
+            "east": "Hallway",
+            "west": "",
+            "description": "You are in the entrance of the bunker. It has a small desk and a check in area. Although, you feel like that is no longer needed. To the east is a hallway that goes deeper into the dark bunker. You can tell several rooms connect to it. To the south is a room with what looks like a bunch of old wires and circuit breakers.",
+            "item": "None"
+        },
+        {
+            "name": "Hallway",
+            "north": "Side Storage",
+            "south": "Large Hall",
+            "east": "Food Storage",
+            "west": "Entrance",
+            "description": "Moving into the hallway, you can see four separate directions you can take. To the north looks like another hallway except smaller and with some shelves and boxes. To the east looks like a room with a bunch of food. You can smell the old grease coming from it. To the south is a large hall which looks like it used to serve as a common area for the bunker, but now, there is a sign that says stay out. You hear thunderous bombs in the room. To the west is the entrance where you came into the bunker.",
+            "item": "Computer Battery"
+        },
+        {
+            "name": "Side Storage",
+            "north": "",
+            "south": "Hallway",
+            "east": "Weapon Room",
+            "west": "Armor Room",
+            "description": "Entering the storage area, you find it's full of shelves, boxes, and other small equipment. To the east is a barricaded door that is slightly ajar. The label says \"Weapon Room\". To the south is the hallway that you used to get to this side of the bunker. To the west is another door that looks similar to the weapon\"s door, except this one says \"Armor Room.\"",
+            "item": "Dead Energy Core"
+        },
+        {
+            "name": "Weapon Room",
+            "north": "",
+            "south": "",
+            "east": "",
+            "west": "Side Storage",
+            "description": "Walking into the room, you find a ton of different guns and weapons. Ranging from kenetic, like bullet weapons, rocket launchers, and energy weapons.  To the west is the door you came through from the storage hallway.",
+            "item": "Walker Plasma Gun"
+        },
+        {
+            "name": "Armor Room",
+            "north": "",
+            "south": "",
+            "east": "Side Storage",
+            "west": "",
+            "description": "Entering the room, you see a ton of different armor pieces, plates, and some mechanical armor pieces. Some of these pieces look very similar to the ones on your walker. Towards the east is the door you came through, leading to the storage area.",
+            "item": "Walker Chest Armor"
+        },
+        {
+            "name": "Food Storage",
+            "north": "",
+            "south": "",
+            "east": "",
+            "west": "Hallway",
+            "description": "Entering the room, you can see a ton of shelves containing lots of cans and food. Although, most of it has rotten, there still should be something edible. To the west is the hallway, which looks like it connects to a lot of different rooms To the south is a hole that\"s too high to get to. Maybe it comes from another room?",
+            "item": "Bacon and Beans"
+        },
+        {
+            "name": "Power Room",
+            "north": "Entrance",
+            "south": "Experiment Room",
+            "east": "",
+            "west": "",
+            "description": "Entering the room, you find a ton of wires, circuit breakers, and a large generator. To the north is the entrance to the bunker from where you came into the bunker. On the south side you find a hole that leads into a larger room. It's too dark to tell what is in the room unless you enter it.",
+            "item": "Charged Energy Core"
+        },
+        {
+            "name": "Experiment Room",
+            "north": "",
+            "south": "",
+            "east": "Experiment Hallway",
+            "west": "",
+            "description": "Heading into the dark room, you see a ton of random machinery, monitoring equipment and experimental technology. To the east, the door to this room, which leads into another hallway connecting other rooms. Above you, you see a hole to a room with a  bunch of cables. But, it's too high to get to.",
+            "item": "Shield Projector"
+        },
+        {
+            "name": "Experiment Hallway",
+            "north": "Large Hall",
+            "south": "",
+            "east": "Experiment Data",
+            "west": "Experiment Room",
+            "description": "Walking into the hallway, you see a bunch of random crates containing data sheets, random pieces of machinery, and experimental technology. To the north you see a large hall that seems to be the common area of the bunker. Loud, thunderous booms can be heard coming from it. To the east looks like a data center for the experimentations. To the west is what looks like the room where all the experimental stuff was tested.",
+            "item": "Plasma Gun Ammo"
+        },
+        {
+            "name": "Experiment Data",
+            "north": "Food Storage",
+            "south": "",
+            "east": "",
+            "west": "Experiment Hallway",
+            "description": "Entering the room, you see a ton of different computers, monitors and equipement that was used to collect and analyze data from the experiments. To the north is a hole  that looks like it enters another room full of food. To the west is a hallway where this room is connected to.",
+            "item": "Digital Files"
+        },
+        {
+            "name": "Large Room",
+            "north": "Hallway",
+            "south": "Experiment Hallway",
+            "east": "",
+            "west": "",
+            "description": "Entering the dark room, you see a ton of broken chairs, tables, buffets tables, and even ersonal computers. This is the central room in the bunker and it\"s the largest, so it\"s not a surpise that what ever is making the noises is in here. All of a sudden the ground starts to shake and you hear loud clanking and booming heading straight for you. You turn around and see the massive mechanical beast of a walker running towards you. It\"s a twisted mess of grown flesh and machine. A big cannon on the one arm and a claw on the other. Glowing red eyes and steel for teeth. It\"ll soon be upon you. Do you have everything you need? (Type Fight)",
+            "item": "Rouge Walker",
+            "finalRoom" : true
+        }       
+    ]
+}
