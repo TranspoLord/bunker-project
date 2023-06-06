@@ -4,7 +4,6 @@ export default class Bunker {
     constructor(finalRoom, currentRoom, player) {
         this.finalRoom = finalRoom;
         this.player = player;
-
         this.rooms = []
     }
 

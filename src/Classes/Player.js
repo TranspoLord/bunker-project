@@ -21,6 +21,14 @@ export default class Player {
     return false;
   }
 
-  //todo: test inventory if item is in inventory
-  
+  getInventory() {
+    return this.inventory
+  }
+
+  inInventory(item) {
+    if(this.inventory.includes(item)) {
+      return true;
+    }
+    return false;
+  }  
 }

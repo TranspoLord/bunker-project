@@ -3,15 +3,14 @@ import { Link, useParams } from 'react-router-dom';
 import '../App.css';
 import Player from '../Classes/Player';
 import { loadBunker } from "../Helper/BuildBunker"
-import InventoryRender from './InventoryRender';
+import { Button } from "@mui/material";
 
 const GameManager = () => {
   const { name } = useParams();
   const [bunker, setBunker] = useState(null);
-  const [update, setUpdate] = useState(0);
   const roomInput = useRef();
 
-  const [displayActionMsg, setDisplayActionMsg] = useState(false);
+  const [messages, setMessages] = useState([]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,9 +25,10 @@ const GameManager = () => {
       prev[curr.toLowerCase()] = () => {
         const successful = bunker.player.pickupItem(item);
         if (successful) {
-          setDisplayActionMsg(true);
-          setUpdate(update + 1);
           room.removeItem()
+          setMessages(prev => [...prev, item.descItemPickup])
+        } else {
+          setMessages(prev => [...prev, item.descItemNeeded])
         }
         return successful;
       }
@@ -38,30 +38,56 @@ const GameManager = () => {
     const removedItem = room.getRemovedItem();
     const alreadyHaves = removedItem?.pickups?.reduce((prev, curr) => {
       prev[curr.toLowerCase()] = () => {
-        console.log(item.descAlreadyHave);
+        console.log(removedItem.descAlreadyHave);
+        setMessages(prev => [...prev, removedItem.descAlreadyHave])
       }
       return prev;
     }, {});
 
+    let defaultPickUp;
+    if (!item?.pickups) {
+      defaultPickUp = {
+        "pickup": () => {
+          console.log('pickup');
+          setMessages(prev => [...prev, 'No Item Found!'])
+        },
+      }
+    }
+
     const commands = {
-      north: () => bunker.north(),
-      east: () => bunker.east(),
-      south: () => bunker.south(),
-      west: () => bunker.west(),
+      north: () => {
+        bunker.north();
+        setMessages([]);
+      },
+      east: () => {
+        bunker.east();
+        setMessages([]);
+      },
+      south: () => {
+        bunker.south();
+        setMessages([]);
+      },
+      west: () => {
+        bunker.west();
+        setMessages([]);
+      },
+      inventory: () => {
+        setMessages(prev => [...prev, bunker.player.getInventory()])
+      },
       ...pickups,
       ...alreadyHaves,
+      ...defaultPickUp,
     };
 
     if (commands[text]) {
       const result = commands[text]();
       if (result) {
-        console.log(result)
+        
       } else console.log('action failed!')
     }
     else console.log('invalid command')
 
     roomInput.current.value = '';
-    setUpdate(update + 1)
   }
 
   useEffect(() => {
@@ -76,22 +102,24 @@ const GameManager = () => {
 
   // Don't render before we loaded the bunker
   if (!bunker) {
-    return (<div></div>)
+    return null;
   }
 
   return (
     <div>
-
+      <Link to={`/gameSettings/${name}`}> 
+      <Button variant="contained" color="primary">Exit</Button>
+      </Link>
       <h2>{bunker.player.room.name}</h2>
       <div>{bunker.player.room.description}</div>
       <div>{bunker.player.room.item?.description}</div>
       <div>*********</div>
-      <InventoryRender IRBunker = {bunker} IRDisplayActionMsg = {displayActionMsg} update = {update}/>
+      {messages.map((m, index) => <div key={index}>{m}</div>)}
+      <div>*********</div>
       <h3>What do you do?</h3>
       <form onSubmit={handleSubmit}>
         <input type="text" ref={roomInput} />
       </form>
-
     </div>
   );
 };

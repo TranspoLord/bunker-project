@@ -45,7 +45,7 @@ const BunkerChoice = () => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Link to={`/gameSettings/${bunker.name}`}>
+                    <Link to={`/gameSettings/${bunker.name}`} >
                         <Button size="small" variant="outlined">Choose</Button>
                     </Link>
                 </CardActions>
