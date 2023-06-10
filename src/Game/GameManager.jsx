@@ -9,6 +9,7 @@ const GameManager = () => {
   const { name } = useParams();
   const [bunker, setBunker] = useState(null);
   const roomInput = useRef();
+  const [lastCommand, setLastCommand] = useState('');
 
   const [messages, setMessages] = useState([]);
 
@@ -54,22 +55,57 @@ const GameManager = () => {
       }
     }
 
+    const finalRoomTest = () => {
+      if (bunker.player.getRoom() == bunker.finalRoom) {
+        setMessages(prev => [...prev, 'You have entered the final room!'])
+        if(bunker.testBaconInventory()){
+          setMessages(prev => [...prev, 'You have won the game!'])
+        } else {
+          setMessages(prev => [...prev, 'You have lost the game!'])
+        }
+      }
+    }
+
     const commands = {
       north: () => {
-        bunker.north();
-        setMessages([]);
+        setLastCommand('north');
+        if(bunker.north() != bunker.finalRoom && lastCommand == 'north'){
+          bunker.north();
+          setMessages([]);
+          finalRoomTest();
+        } else {
+          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
+        }
       },
       east: () => {
-        bunker.east();
-        setMessages([]);
+        setLastCommand('east');
+        if(bunker.east() != bunker.finalRoom && lastCommand == 'east'){
+          bunker.east();
+          setMessages([]);
+          finalRoomTest();
+        } else {
+          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
+        }
       },
       south: () => {
-        bunker.south();
-        setMessages([]);
+        setLastCommand('south');
+        if(bunker.south() != bunker.finalRoom && lastCommand == 'south'){
+          bunker.south();
+          setMessages([]);
+          finalRoomTest();
+        } else {
+          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
+        }
       },
       west: () => {
-        bunker.west();
-        setMessages([]);
+        setLastCommand('west');
+        if(bunker.west() != bunker.finalRoom && lastCommand == 'west'){
+          bunker.west();
+          setMessages([]);
+          finalRoomTest();
+        } else {
+          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
+        }
       },
       inventory: () => {
         setMessages(prev => [...prev, 
@@ -125,5 +161,6 @@ const GameManager = () => {
     </div>
   );
 };
+
 
 export default GameManager;

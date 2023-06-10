@@ -121,7 +121,8 @@
             "east": "Hallway",
             "west": "",
             "description": "You are in the entrance of the bunker. It has a small desk and a check in area. Although, you feel like that is no longer needed. To the east is a hallway that goes deeper into the dark bunker. You can tell several rooms connect to it. To the south is a room with what looks like a bunch of old wires and circuit breakers.",
-            "item": "None"
+            "item": "None",
+            "finalRoom" : false
         },
         {
             "name": "Hallway",
@@ -130,7 +131,8 @@
             "east": "Food Storage",
             "west": "Entrance",
             "description": "Moving into the hallway, you can see four separate directions you can take. To the north looks like another hallway except smaller and with some shelves and boxes. To the east looks like a room with a bunch of food. You can smell the old grease coming from it. To the south is a large hall which looks like it used to serve as a common area for the bunker, but now, there is a sign that says stay out. You hear thunderous bombs in the room. To the west is the entrance where you came into the bunker.",
-            "item": "Computer Battery"
+            "item": "Computer Battery",
+            "finalRoom" : false
         },
         {
             "name": "Side Storage",
@@ -139,7 +141,8 @@
             "east": "Weapon Room",
             "west": "Armor Room",
             "description": "Entering the storage area, you find it's full of shelves, boxes, and other small equipment. To the east is a barricaded door that is slightly ajar. The label says \"Weapon Room\". To the south is the hallway that you used to get to this side of the bunker. To the west is another door that looks similar to the weapon\"s door, except this one says \"Armor Room.\"",
-            "item": "Dead Energy Core"
+            "item": "Dead Energy Core",
+            "finalRoom" : false
         },
         {
             "name": "Weapon Room",
@@ -148,7 +151,8 @@
             "east": "",
             "west": "Side Storage",
             "description": "Walking into the room, you find a ton of different guns and weapons. Ranging from kenetic, like bullet weapons, rocket launchers, and energy weapons.  To the west is the door you came through from the storage hallway.",
-            "item": "Walker Plasma Gun"
+            "item": "Walker Plasma Gun",
+            "finalRoom" : false
         },
         {
             "name": "Armor Room",
@@ -157,7 +161,8 @@
             "east": "Side Storage",
             "west": "",
             "description": "Entering the room, you see a ton of different armor pieces, plates, and some mechanical armor pieces. Some of these pieces look very similar to the ones on your walker. Towards the east is the door you came through, leading to the storage area.",
-            "item": "Walker Chest Armor"
+            "item": "Walker Chest Armor",
+            "finalRoom" : false
         },
         {
             "name": "Food Storage",
@@ -166,7 +171,8 @@
             "east": "",
             "west": "Hallway",
             "description": "Entering the room, you can see a ton of shelves containing lots of cans and food. Although, most of it has rotten, there still should be something edible. To the west is the hallway, which looks like it connects to a lot of different rooms To the south is a hole that\"s too high to get to. Maybe it comes from another room?",
-            "item": "Bacon and Beans"
+            "item": "Bacon and Beans",
+            "finalRoom" : false
         },
         {
             "name": "Power Room",
@@ -175,7 +181,8 @@
             "east": "",
             "west": "",
             "description": "Entering the room, you find a ton of wires, circuit breakers, and a large generator. To the north is the entrance to the bunker from where you came into the bunker. On the south side you find a hole that leads into a larger room. It's too dark to tell what is in the room unless you enter it.",
-            "item": "Charged Energy Core"
+            "item": "Charged Energy Core",
+            "finalRoom" : false
         },
         {
             "name": "Experiment Room",
@@ -184,7 +191,8 @@
             "east": "Experiment Hallway",
             "west": "",
             "description": "Heading into the dark room, you see a ton of random machinery, monitoring equipment and experimental technology. To the east, the door to this room, which leads into another hallway connecting other rooms. Above you, you see a hole to a room with a  bunch of cables. But, it's too high to get to.",
-            "item": "Shield Projector"
+            "item": "Shield Projector",
+            "finalRoom" : false
         },
         {
             "name": "Experiment Hallway",
@@ -193,7 +201,8 @@
             "east": "Experiment Data",
             "west": "Experiment Room",
             "description": "Walking into the hallway, you see a bunch of random crates containing data sheets, random pieces of machinery, and experimental technology. To the north you see a large hall that seems to be the common area of the bunker. Loud, thunderous booms can be heard coming from it. To the east looks like a data center for the experimentations. To the west is what looks like the room where all the experimental stuff was tested.",
-            "item": "Plasma Gun Ammo"
+            "item": "Plasma Gun Ammo",
+            "finalRoom" : false
         },
         {
             "name": "Experiment Data",
@@ -202,7 +211,8 @@
             "east": "",
             "west": "Experiment Hallway",
             "description": "Entering the room, you see a ton of different computers, monitors and equipement that was used to collect and analyze data from the experiments. To the north is a hole  that looks like it enters another room full of food. To the west is a hallway where this room is connected to.",
-            "item": "Digital Files"
+            "item": "Digital Files",
+            "finalRoom" : false
         },
         {
             "name": "Large Room",

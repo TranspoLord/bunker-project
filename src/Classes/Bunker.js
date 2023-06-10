@@ -1,3 +1,5 @@
+import { FormatQuote } from "@mui/icons-material";
+
 export default class Bunker {
     // Array of Rooms
     room
@@ -18,6 +20,22 @@ export default class Bunker {
             room.setSouthRoom(this.findRoom(room.southName))
         })
     }
+
+    /**
+     * Tests player inventory for all items
+     * @return Boolean
+     */
+    testBaconInventory() {
+        const requiredItems = this.rooms.reduce((allItems, room) => {
+            if (room.item.bacon == true) allItems.push(room.item.name)
+            return allItems;
+        },[]);
+        
+        console.log(requiredItems);
+
+        return requiredItems.length === 0;
+    }
+
 
     /**
      * @param room Room
