@@ -42,6 +42,7 @@ function Home() {
         <p>This is a game I am working on. It is a text based game where you manage a bunker and try to survive.</p>
         <p>It is still in development, but I am working on it as much as I can.</p>
         <p>Feel free to play around with it! Feedback feature is planned to be added!</p>
+        <p>Currently the UI is a bit lacking....a lot. lol. I'm working on backend dev first before prioritizing the UI</p>
         <p>NOTE: The game is kinda playable. Currently, managing the bunkers, creating them, and movements</p>
         <p>is the only thing working at the moment. As I am only working on this during free time, I don't have an absolute ton of spare time to work on it. </p>. 
         <p>If you look in the Dev Log, you can see a rough ToDo List of bugs, qol, and planned updates!</p>

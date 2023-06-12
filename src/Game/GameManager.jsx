@@ -55,62 +55,54 @@ const GameManager = () => {
       }
     }
 
-    const finalRoomTest = () => {
-      if (bunker.player.getRoom() == bunker.finalRoom) {
-        setMessages(prev => [...prev, 'You have entered the final room!'])
-        if(bunker.testBaconInventory()){
-          setMessages(prev => [...prev, 'You have won the game!'])
-        } else {
-          setMessages(prev => [...prev, 'You have lost the game!'])
-        }
+    const movementLogic = (action) => {
+      if (action === 'north' && room.north) {
+        console.log('going north');
+        bunker.north();
+        setMessages([]);
+      }
+      else if (action === 'east' && room.east) {
+        console.log('going east');
+        bunker.east();
+        setMessages([]);
+      }
+      else if (action === 'south' && room.south) {
+        console.log('going south');
+        bunker.south();
+        setMessages([]);
+      }
+      else if (action === 'west' && room.west) {
+        console.log('going west');
+        bunker.west();
+        setMessages([]);
+      }
+      else {
+        console.log('no room in that direction');
+        setMessages(prev => [...prev, 'No room in that direction!'])
       }
     }
 
     const commands = {
       north: () => {
         setLastCommand('north');
-        if(bunker.north() != bunker.finalRoom && lastCommand == 'north'){
-          bunker.north();
-          setMessages([]);
-          finalRoomTest();
-        } else {
-          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
-        }
+        movementLogic('north');
       },
       east: () => {
         setLastCommand('east');
-        if(bunker.east() != bunker.finalRoom && lastCommand == 'east'){
-          bunker.east();
-          setMessages([]);
-          finalRoomTest();
-        } else {
-          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
-        }
+        movementLogic('east');
       },
       south: () => {
         setLastCommand('south');
-        if(bunker.south() != bunker.finalRoom && lastCommand == 'south'){
-          bunker.south();
-          setMessages([]);
-          finalRoomTest();
-        } else {
-          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
-        }
+        movementLogic('south');
       },
       west: () => {
         setLastCommand('west');
-        if(bunker.west() != bunker.finalRoom && lastCommand == 'west'){
-          bunker.west();
-          setMessages([]);
-          finalRoomTest();
-        } else {
-          setMessages(prev => [...prev, 'That is the final room! Are you sure you want to enter? (Type command again)'])
-        }
+        movementLogic('west');
       },
       inventory: () => {
-        setMessages(prev => [...prev, 
-          'Inventory: ' +
-          bunker.player.getInventory().map(i => i.name).join(', ')])
+        setMessages(prev => [...prev,
+        'Inventory: ' +
+        bunker.player.getInventory().map(i => i.name).join(', ')])
       },
       ...pickups,
       ...alreadyHaves,
@@ -120,7 +112,7 @@ const GameManager = () => {
     if (commands[text]) {
       const result = commands[text]();
       if (result) {
-        
+        console.log('action successful!')
       } else console.log('action failed!')
     }
     else console.log('invalid command')
@@ -145,8 +137,8 @@ const GameManager = () => {
 
   return (
     <div>
-      <Link to={`/gameSettings/${name}`}> 
-      <Button variant="contained" color="primary">Exit</Button>
+      <Link to={`/gameSettings/${name}`}>
+        <Button variant="contained" color="primary">Exit</Button>
       </Link>
       <h2>{bunker.player.room.name}</h2>
       <div>{bunker.player.room.description}</div>
