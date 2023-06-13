@@ -23,6 +23,7 @@ function loadRoom(roomData, itemsData) {
     room.southName = roomData.south;
     room.eastName = roomData.east;
     room.westName = roomData.west;
+    room.finalRoom = roomData.finalRoom;
     room.item = loadItem(roomData.item, itemsData);
     return room;
 }

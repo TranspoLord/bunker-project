@@ -10,6 +10,8 @@ export default class Room {
     west
     westName
 
+    finalRoom
+
     removedItem
     item
 
@@ -39,7 +41,9 @@ export default class Room {
         this.south = room
     }
 
-
+    setFinalRoom(bool) {
+        this.finalRoom = bool
+    }
 
     getName() {
         return this.name

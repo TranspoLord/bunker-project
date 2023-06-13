@@ -4,10 +4,14 @@ import '../App.css';
 import Player from '../Classes/Player';
 import { loadBunker } from "../Helper/BuildBunker"
 import { Button } from "@mui/material";
+import ActionLogic from './ActionLogic';
 
 const GameManager = () => {
   const { name } = useParams();
   const [bunker, setBunker] = useState(null);
+  const ActionLogic = new ActionLogic(bunker, setBunker);
+
+
   const roomInput = useRef();
   const [lastCommand, setLastCommand] = useState('');
 
