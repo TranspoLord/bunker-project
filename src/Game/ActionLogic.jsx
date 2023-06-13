@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useParams } from 'react';
 
 const ActionLogic = (props) => {
     //React variables
@@ -55,7 +55,7 @@ const ActionLogic = (props) => {
         e.preventDefault();
 
         //Get input and get fresh references to room
-        const text = roomInput.current.value.toLowerCase().trim();
+        const text = playerInput.current.value.toLowerCase().trim();
         console.log("Command: ", text);
         let room = bunker.player.getRoom();
         let item = room.getItem();
