@@ -59,6 +59,7 @@ return (
         <Link to="/">
             <Button variant='contained'>Back</Button>
         </Link>
+        {bunkerList.length == 0 ? <div>No bunkers found. Create one in the Manage Bunkers page!</div> : ''}
         {bunkerList.map((bunker, index) => (
             <div key={index}>
                 {BunkerCard(bunker, index)}
