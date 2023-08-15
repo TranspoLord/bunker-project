@@ -35,6 +35,11 @@ function Home() {
         <Link to="/Reporting">
           <Button variant='contained'>Dev Log</Button>
         </Link>
+
+        <Link to="/GPTTesting">
+          <Button disabled variant='contained'>GPT Testing</Button>
+        </Link>
+
       </div>
 
       <div>
@@ -46,6 +51,8 @@ function Home() {
         <p>NOTE: The game is kinda playable, so expect a lot of missing features and/or bugs. </p>. 
         <p>If you look in the Dev Log, you can see a rough ToDo List of bugs, qol, and planned updates!</p>
       </div>
+
+      
 
     </>
   )

@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+
 function PageNotFound() {
   return (
     <div>
@@ -6,4 +8,4 @@ function PageNotFound() {
   );
 }
 
-export default PageNotFound
+export { PageNotFound };

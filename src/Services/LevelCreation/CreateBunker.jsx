@@ -4,8 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { InputLabel, MenuItem, Select, FormControlLabel, Checkbox } from '@mui/material';
 import { Context } from '../SnackBar/SnackBarStoreContext';
-import TestBunkerLogic from './TestBunkerLogic';
-import ItemManagement from './ItemManagement';
+import TestBunkerLogic from '../Logic/TestBunkerLogic';
+import ItemManagement from '../ItemManagement';
 
 function CreateBunker(props) {
     const [state, dispatch] = useContext(Context);

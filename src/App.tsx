@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import './App.css';
-import GameManager from './Game/GameManager';
-import BunkerManager from './BunkerManagement/BunkerManager';
-import GameSettings from './Game/GameSettings';
-import Home from './Pages/Home';
-import PageNotFound from './Pages/PageNotFound';
+import GameManager from './Screens/Game/GameManager';
+import BunkerManager from './Services/LevelCreation/BunkerManager';
+import GameSettings from './Screens/Game/GameSettings';
+import Home from './Screens/Home';
+import {PageNotFound} from './Screens/PageNotFound';
 import { Routes, Route } from "react-router";
-import CreateBunker from './BunkerManagement/CreateBunker';
-import SnackBarMessage from './SnackBar/SnackBar';
-import BunkerChoice from './Game/BunkerChoice';
-import ReportingHome from './Reporting/ReportingHome';
-import DevLog from './Reporting/DevLog';
+import CreateBunker from './Services/LevelCreation/CreateBunker';
+import SnackBarMessage from './Services/SnackBar/SnackBar';
+import BunkerChoice from './Screens/Game/BunkerChoice';
+import ReportingHome from './Screens/Reporting/ReportingHome';
+import DevLog from './Screens/Reporting/DevLog';
+import GPTTesting from './Screens/GPTTesting';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <SnackBarMessage />
       <Routes>
         <Route path={"/"} element={<Home />} />
+        <Route path={"/GPTTesting"} element={<GPTTesting />} />
         <Route path={"/Reporting"} element={<ReportingHome />} />
         <Route path={"/Reporting/DevLog"} element={<DevLog />} />
         <Route path={"/game"} element={<GameSettings />} />
@@ -32,6 +34,6 @@ function App() {
       </Routes>
     </div>
   )
-}
+} 
 
 export default App;
