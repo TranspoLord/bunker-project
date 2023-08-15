@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-
-
-
+import Header from '../../Views/Header';
 
 function ReportingHome() {
     const [fileContents, setFileContents] = useState('');
+
+    const buttons = [
+        { name: 'Dev Log', link: '/Reporting/DevLog' },
+         ];
 
     useEffect(() => {
         const fetchFileContents = async () => {
@@ -29,15 +31,7 @@ function ReportingHome() {
 
     return (
         <>
-            <div>
-                <Link to="/">
-                    <Button variant='contained'>Back</Button>
-                </Link>
-
-                <Link to="/Reporting/DevLog">
-                    <Button variant='contained'>Dev Log</Button>
-                </Link>
-            </div>
+            <Header buttons={buttons}/>
 
             <div>
                 <h2>Reporting</h2>

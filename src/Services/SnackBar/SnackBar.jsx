@@ -1,5 +1,4 @@
 import React, { useState, useContext} from 'react';
-import '../../App.css';
 import { Snackbar, Alert} from '@mui/material';
 import { Context } from './SnackBarStoreContext';
 

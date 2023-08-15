@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import '../../App.css';
 import Player from '../../Models/Player';
 import { loadBunker } from "../../Services/LevelCreation/BuildBunker"
 import { Button } from "@mui/material";
-import ActionLogic from '../../Services/Logic/ActionLogic';
 
 const GameManager = () => {
   const { name } = useParams();

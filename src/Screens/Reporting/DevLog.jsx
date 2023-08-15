@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import CommitHistory from './CommitHistory';
+import Header from '../../Views/Header';
 
 function DevLog() {
 
@@ -11,11 +11,7 @@ function DevLog() {
 
   return (
     <>
-      <div>
-        <Link to="/Reporting">
-          <Button variant='contained'>Back</Button>
-        </Link>
-      </div>
+      <Header />
       <div>
         <h1>Development History</h1>
         </div>

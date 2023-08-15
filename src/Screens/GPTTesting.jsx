@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import GPTResponse from "../Services/GPT/GPT";
+import Header from "./../Views/Header";
 
 function GPTTesting() {
   const [prompt, setPrompt] = useState("");
@@ -17,11 +18,7 @@ function GPTTesting() {
 
   return (
     <>
-      <div>
-        <Link to="/Home">
-          <Button variant="contained">Back</Button>
-        </Link>
-      </div>
+      <Header />
       <div>
         <h1>GPT Testing</h1>
         <textarea
