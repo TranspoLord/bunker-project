@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
-import GPTResponse from "../Services/GPT/GPT";
 import Header from "./../Views/Header";
+
+const OpenAIHandler = require("../Services/GPT/OpenAIHandler");
 
 function GPTTesting() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [clicked, setClicked] = useState(false);
+  const openAI = new OpenAIHandler();
 
   const handleGenerateResponse = async () => {
     setClicked(true);
-    const response = await GPTResponse(prompt);
+    const response = await openAI.getChatResponse(prompt);
     setResponse(response);
   };
 
@@ -33,7 +35,9 @@ function GPTTesting() {
         </Button>
         <div>
           <h2>Generated Response:</h2>
-          <p>Currently borked</p>
+          <p>GPT Response works now! However, due the api calls actually costing money, even though it is a small amount,
+            I have disabled the button. If you want to test it out, please contact me
+          </p>
           <p>{response ? response : clicked ? "Generating Response" : ""}</p>
         </div>
       </div>

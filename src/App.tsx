@@ -11,6 +11,7 @@ import BunkerChoice from './Screens/Game/BunkerChoice';
 import ReportingHome from './Screens/Reporting/ReportingHome';
 import DevLog from './Screens/Reporting/DevLog';
 import GPTTesting from './Screens/GPTTesting';
+import AppSettings from './Screens/AppSettings';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/GPTTesting"} element={<GPTTesting />} />
+        <Route path={"/AppSettings"} element={<AppSettings />} />
         <Route path={"/Reporting"} element={<ReportingHome />} />
         <Route path={"/Reporting/DevLog"} element={<DevLog />} />
         <Route path={"/game"} element={<GameSettings />} />
