@@ -36,7 +36,9 @@ function GPTTesting() {
         <div>
           <h2>Generated Response:</h2>
           <p>GPT Response works now! However, due the api calls actually costing money, even though it is a small amount,
-            I have disabled the button. If you want to test it out, please contact me
+            I have disabled the button. Currently implementing a way for the user to add their own api key from OpenAI
+            so that they can use their own account to generate responses. You can find this in Settings. It does
+            NOT work yet.
           </p>
           <p>{response ? response : clicked ? "Generating Response" : ""}</p>
         </div>
