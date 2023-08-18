@@ -1,5 +1,5 @@
 import React from "react";
-import OpenAIHandler from "./OpenAIHandler";
+import { OpenAIHandler } from "./OpenAIHandler";
 import { DecryptData } from "../Encryption/Encryption";
 
 export const GetGPTResponse = async (prompt) => {
