@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import Header from '../../Views/Header';
+import Header from '../../UIElements/Header';
 
 function ReportingHome() {
     const [fileContents, setFileContents] = useState('');

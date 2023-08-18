@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import "./../Views/styles.css";
+import "../../UIElements/styles.css";
 
 function Home() {
   const [fileContents, setFileContents] = useState("");

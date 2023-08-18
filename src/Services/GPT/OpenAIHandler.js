@@ -1,9 +1,9 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 class OpenAIHandler {
-  constructor() {
+  constructor(key) {
     this.configuration = new Configuration({
-      apiKey: process.env.REACT_APP_GPTApiKey,
+      apiKey: key,
     });
     this.openai = new OpenAIApi(this.configuration);
   }

@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import GameManager from './Screens/Game/GameManager';
 import BunkerManager from './Screens/LevelCreation/BunkerManager';
 import GameSettings from './Screens/Game/GameSettings';
-import Home from './Screens/Home';
-import {PageNotFound} from './Screens/PageNotFound';
+import Home from './Screens/Pages/Home';
+import {PageNotFound} from './Screens/Pages/PageNotFound';
 import { Routes, Route } from "react-router";
 import CreateBunker from './Services/LevelCreation/CreateBunker';
 import SnackBarMessage from './Services/SnackBar/SnackBar';
 import BunkerChoice from './Screens/Game/BunkerChoice';
 import ReportingHome from './Screens/Reporting/ReportingHome';
 import DevLog from './Screens/Reporting/DevLog';
-import GPTTesting from './Screens/GPTTesting';
-import AppSettings from './Screens/AppSettings';
+import GPTTesting from './Screens/GPT/GPTTesting';
+import AppSettings from './Screens/Pages/AppSettings';
 
 
 function App() {

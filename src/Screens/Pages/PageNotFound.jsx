@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Header from "../Views/Header";
+import Header from "../../UIElements/Header";
 
 function PageNotFound() {
   return (

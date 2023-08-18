@@ -5,7 +5,7 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/mate
 import { InputLabel, MenuItem, Select, FormControlLabel, Checkbox } from '@mui/material';
 import { Context } from '../SnackBar/SnackBarStoreContext';
 import TestBunkerLogic from '../Logic/TestBunkerLogic';
-import ItemManagement from '../ItemManagement';
+import ItemManagement from './ItemManagement';
 
 function CreateBunker(props) {
     const [state, dispatch] = useContext(Context);

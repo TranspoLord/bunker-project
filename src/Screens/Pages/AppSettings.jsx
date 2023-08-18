@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../Services/SnackBar/SnackBarStoreContext";
-import Header from "../Views/Header";
+import { Context } from "../../Services/SnackBar/SnackBarStoreContext";
+import Header from "../../UIElements/Header";
 import {
   ClearLocal,
   ClearSession,
   GetSessionOpenAIKey,
   SetSessionOpenAIKey,
-} from "../Services/AppSettingsService";
+} from "../../Services/Settings/AppSettingsService";
 
 const AppSettings = () => {
   const [state, dispatch] = useContext(Context);
@@ -65,11 +65,9 @@ const AppSettings = () => {
 
   return (
     <>
-      <div className="secondary-container-a">
+      <div className="secondary-container-c">
         <Header />
-        <div className="title-text">
-          <h1>App Settings</h1>
-        </div>
+        <div className="title-text">App Settings</div>
         <div className="secondary-container-b">
           <div className="secondary-title">Storage Settings</div>
           <div className="settings-button">

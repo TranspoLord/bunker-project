@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import CommitHistory from './CommitHistory';
-import Header from '../../Views/Header';
+import Header from '../../UIElements/Header';
 
 function DevLog() {
 

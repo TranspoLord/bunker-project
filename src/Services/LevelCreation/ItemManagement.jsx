@@ -2,7 +2,7 @@ import { React } from 'react';
 import { useState, useContext } from 'react';
 import { Box, ListItemButton } from '@mui/material';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem, List, ListItemText, Collapse } from '@mui/material';
-import { Context } from '../Services/SnackBar/SnackBarStoreContext';
+import { Context } from '../SnackBar/SnackBarStoreContext';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 function ItemManagement({ bunkerItems, setItems }) {

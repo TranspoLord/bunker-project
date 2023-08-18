@@ -24,6 +24,7 @@
   flex-direction: column;
   height: 100vh;
   background-color: #4d0101;
+  padding-left: 10px;
 }
 
 .secondary-container-b {
@@ -31,6 +32,27 @@
   flex-direction: column;
   justify-content: left;
   margin: 20px;
+}
+
+.secondary-container-c{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #4d0101;
+}
+
+.secondary-container-b Button {
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.secondary-container-b textarea {
+  width: 70%;
+  height: 100%;
+  margin: auto;
+  resize: none;
+  margin-bottom: 10px;
 }
 
 .secondary-title {
@@ -41,10 +63,27 @@
   margin-left: 3px;
 }
 
-.title-text {
+.secondary-title-centered {
   color: white;
   font-size: 20px;
   text-align: center;
+  margin-bottom: 10px;
+  margin-left: 3px;
+
+}
+
+.title-text {
+  color: white;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.secondary-text {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .settings-button {

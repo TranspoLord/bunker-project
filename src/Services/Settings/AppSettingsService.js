@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { EncryptData, DecryptData } from "./Encryption";
+import { EncryptData, DecryptData } from "../Encryption/Encryption";
 import {
   Button,
   Dialog,
@@ -50,9 +50,11 @@ export const SetSessionOpenAIKey = ({ open, onClose }) => {
       } else {
         if (storeLocal) {
           localStorage.setItem("openai-key", EncryptData(textValue));
+          localStorage.setItem("activeOpenAiKey", "local");
           onClose();
         } else {
           sessionStorage.setItem("openai-key", EncryptData(textValue));
+          sessionStorage.setItem("activeOpenAiKey", "session");
           onClose();
         }
       }
