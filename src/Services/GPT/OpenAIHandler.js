@@ -38,4 +38,4 @@ class OpenAIHandler {
   }
 }
 
-module.exports = OpenAIHandler;
+module.exports = { OpenAIHandler };
