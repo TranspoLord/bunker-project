@@ -1,6 +1,6 @@
 const { Configuration, OpenAIApi } = require("openai");
 
-class OpenAIHandler {
+export class OpenAIHandler {
   constructor(key) {
     this.configuration = new Configuration({
       apiKey: key,
@@ -37,5 +37,3 @@ class OpenAIHandler {
     }
   }
 }
-
-module.exports = { OpenAIHandler };
