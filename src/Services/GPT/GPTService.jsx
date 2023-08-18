@@ -18,7 +18,6 @@ export const GetGPTResponse = async (prompt) => {
 };
 
 export const GetApiKeyLocal = () => {
-  console.log("local storage key: ", localStorage.getItem("openai-key"));
   return DecryptData(localStorage.getItem("openai-key"));
 };
 
