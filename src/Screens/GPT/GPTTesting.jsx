@@ -6,12 +6,13 @@ import { GetGPTResponse } from "../../Services/GPT/GPTService";
 function GPTTesting() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
-  const [clicked, setClicked] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   const handleGenerateResponse = async () => {
-    setClicked(true);
+    setGenerating(true);
     const response = await GetGPTResponse(prompt);
     setResponse(response);
+    setGenerating(false);
   };
 
   return (
@@ -41,8 +42,7 @@ function GPTTesting() {
           </Button>
           <div className="secondary-title-centered">Generated Response</div>
           <div className="secondary-text">
-            <p>GPT access is still a work in progress. Have issues with decrypting api key</p>
-            {/* <p>{response ? response : clicked ? "Generating Response" : ""}</p> */}
+            <p>{generating ? "Generating Response..." : response ? response : "Generating Response..."}</p>
           </div>
         </div>
       </div>

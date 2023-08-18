@@ -6,11 +6,8 @@ function encrypt(data) {
 }
 
 function decrypt(data) {
-  console.log("data", data);
   let decryptedBytes = CryptoJS.AES.decrypt(data, process.env.REACT_APP_EncryptionKey);
-  console.log("decryptedBytes", decryptedBytes);
   let decryptedData = decryptedBytes.toString(CryptoJS.enc.Utf8);
-  console.log("decryptedData", decryptedData);
   return decryptedData;
 }
 
