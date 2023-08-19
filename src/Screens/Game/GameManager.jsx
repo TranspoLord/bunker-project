@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Player from '../../Models/Player';
-import { loadBunker } from "../../Services/LevelCreation/BuildBunker"
+import { loadBunker } from "../../Services/LevelManagement/BuildBunker"
 import { Button } from "@mui/material";
 
 const GameManager = () => {

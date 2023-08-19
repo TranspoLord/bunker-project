@@ -86,6 +86,13 @@
   margin-top: 10px;
 }
 
+.secondary-text-a {
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 10px;
+}
+
 .settings-button {
   color: white;
   border: none;
@@ -132,4 +139,45 @@ p {
   pointer-events: none;
   opacity: 0.5; 
   cursor: not-allowed; 
+}
+
+.secondary-container-d {
+  display: flex;
+  flex-direction: row; /* Display the buttons and bunker list side by side */
+  align-items: flex-start; /* Align items to the top */
+  margin: 20px;
+}
+
+.buttons-left {
+  display: flex;
+  flex-direction: column; /* Stack the buttons vertically */
+  align-items: flex-start; /* Align items to the left */
+  margin-right: 20px; /* Add space between the buttons and bunker list */
+  margin-top: 10px;
+}
+
+.buttons-left-row {
+  display: flex;
+  flex-direction: row; /* Stack the buttons vertically */
+  align-items: flex-start; /* Align items to the left */
+  margin-right: 20px; /* Add space between the buttons and bunker list */
+  margin-top: 10px;
+}
+
+.buttons-left Button {
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.buttons-left-row Button {
+  width: fit-content;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.bunker-list {
+  display: flex;
+  flex-direction: column; /* Stack the bunker cards vertically */
+  margin-top: 10px;
+  flex-grow: 1; /* Allow the bunker list to take available space */
 }
