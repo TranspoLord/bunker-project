@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
 import Header from "../../UIElements/Header";
 
 function ReportingHome() {
   const [fileContents, setFileContents] = useState("");
 
-  const buttons = [{ name: "Dev Log", link: "/Reporting/DevLog" }];
+  const buttons = [{ name: "Commit History", link: "/Reporting/DevLog" },
+  { name: "Trello Board", link: "https://trello.com/b/Ox5fOGv2/bunkerproject", external: true },
+  { name: "Discussion Board", link: "https://github.com/TranspoLord/bunker-project/discussions", external: true }];
 
   useEffect(() => {
     const fetchFileContents = async () => {
@@ -22,10 +22,6 @@ function ReportingHome() {
     fetchFileContents();
   }, []);
 
-  const handleClickTrelloBoard = () => {
-    window.open("https://trello.com/b/Ox5fOGv2/bunkerproject");
-  };
-
   return (
     <>
       <Header buttons={buttons} />
@@ -35,21 +31,14 @@ function ReportingHome() {
         <div className="secondary-container-d">
           <div className="secondary-text">
             <p>
-              Plan for this page is to be the home page for feedback, bug
-              reporting, todo list, and dev log...and possibly more
+              There's lots planned for this page! As of now, you can view the 
+              Dev Log, the Trello board, the Commit History, and the discussion board!
+              Planned to add a bug report form right in the application!
             </p>
           </div>
         </div>
         <h2>Todo List</h2>
         <div className="secondary-text-a">
-          <div className="buttons-left-row">
-            <Button
-              variant="contained"
-              onClick={() => handleClickTrelloBoard()}
-            >
-              Trello Board
-            </Button>
-          </div>
           <p>{fileContents}</p>
         </div>
       </div>

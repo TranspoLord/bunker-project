@@ -12,7 +12,7 @@ import ReportingHome from './Screens/Reporting/ReportingHome';
 import DevLog from './Screens/Reporting/DevLog';
 import GPTTesting from './Screens/GPT/GPTTesting';
 import AppSettings from './Screens/Pages/AppSettings';
-
+import CreateLevel from './Screens/LevelManagement/LevelCreation/CreateLevel';
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
         <Route path={"/gameSettings/:name"} element={<GameSettings />} />
         <Route path={"/manage"} element={<BunkerManager />} />
         <Route path={"/manage/create"} element={<CreateBunker isCreatingBunker={true} />} />
+        <Route path={"/manage/CreateLevel"} element={<CreateLevel isCreatingBunker={true}/>} />
         <Route path={"/manage/edit/:name"} element={<CreateBunker isCreatingBunker={false} />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

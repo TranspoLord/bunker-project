@@ -44,6 +44,16 @@ const LevelManager = () => {
                 Create Bunker
               </Button>
             </Link>
+            <Link to="/manage/CreateLevel">
+              <Button
+                variant="contained"
+                onClick={() => {
+                  console.log("Create bunker");
+                }}
+              >
+                Create Bunker (New)
+              </Button>
+            </Link>
             <Button
               variant="contained"
               onClick={() => {

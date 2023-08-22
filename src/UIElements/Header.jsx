@@ -13,6 +13,14 @@ function Header({ previousPage, buttons }) {
     }
   };
 
+  const handleClick = (link, external) => {
+    if(external) {
+      window.location.href = link;
+    } else {
+      navigate(link);
+    }
+  };
+
   return (
     <div className="header">
       <div className="header-buttons">
@@ -21,9 +29,9 @@ function Header({ previousPage, buttons }) {
         </div>
         {buttons ? buttons.map((button, index) => (
           <div className="button">
-            <Link key={index} to={button.link}>
+            <button key={index} onClick={() => handleClick(button.link, button.external)}>
               {button.name}
-            </Link>
+            </button>
           </div>
         )) : ""}
       </div>
