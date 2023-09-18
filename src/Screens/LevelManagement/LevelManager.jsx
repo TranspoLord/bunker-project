@@ -5,7 +5,7 @@ import { LevelCard } from "./LevelCard";
 import Header from "../../UIElements/Header";
 import { Context } from "../../Services/SnackBar/SnackBarStoreContext";
 import { LoadTestLevel } from "../../Services/LevelManagement/LevelManagerService";
-import { handleFileChange } from "../../Services/LevelManagement/FileManagement";
+import { handleFileChange } from "../../Services/Storage/FileManagement";
 import { RemoveLevel } from "../../Services/LevelManagement/LevelManagerService";
 
 const LevelManager = () => {

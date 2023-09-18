@@ -1,3 +1,5 @@
+//If this doesnt work or complains about the button, try changing file name
+//to .jsx instead of .js
 import { Button } from "@mui/material";
 
 export const handleFileChange = (dispatch, navigate, event) => {

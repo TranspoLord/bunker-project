@@ -107,6 +107,10 @@
   margin-top: 10px;
 }
 
+.button-container-right {
+  text-align: right;
+}
+
 .settings-button {
   color: white;
   border: none;
@@ -123,6 +127,18 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.button-a {
+  padding: 12px 20px;
+  background-color: #007bff;
+  font-size: 17px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 15px;
 }
 
 .button:hover {
